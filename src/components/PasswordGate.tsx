@@ -16,7 +16,7 @@ const simpleHash = async (str: string): Promise<string> => {
 // Set your admin password here (hashed for basic protection)
 // To generate a new hash, run in browser console:
 // crypto.subtle.digest('SHA-256', new TextEncoder().encode('yourpassword')).then(buf => console.log(Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')))
-const ADMIN_PASSWORD_HASH = 'govindrajgupta'; // Default: "admin"
+const ADMIN_PASSWORD_HASH = 'a9fc615de6ba1f6adb195ab19f0d07ed5c0f0e67a2dc0ae5e34a5aaad7a8c1db'; // Password: "govindrajgupta"
 
 interface PasswordGateProps {
   children: React.ReactNode;
