@@ -27,14 +27,16 @@ const NavHeader = () => {
 
   return (
     <header 
-      className={`sticky top-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-500 ease-out ${
         isScrolled 
-          ? "bg-background/98 backdrop-blur-md shadow-sm border-b border-border/30" 
-          : "bg-background"
+          ? "bg-background/98 backdrop-blur-md shadow-[0_2px_20px_-4px_rgba(0,0,0,0.1)] border-b border-border/20" 
+          : "bg-background shadow-none border-b border-transparent"
       }`}
     >
       <div className="container-wide">
-        <nav className="flex items-center justify-between py-4">
+        <nav className={`flex items-center justify-between transition-all duration-500 ease-out ${
+          isScrolled ? "py-3" : "py-4"
+        }`}>
           {/* Logo with refined styling matching footer */}
           <Link to="/" className="flex items-center gap-4 group">
             <img 
