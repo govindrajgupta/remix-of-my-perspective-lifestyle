@@ -42,7 +42,9 @@ const NavHeader = () => {
             <img 
               src={logo} 
               alt="Nyaya Alamban Logo" 
-              className="h-14 sm:h-16 w-auto transition-transform duration-300 group-hover:scale-105"
+              className={`w-auto transition-all duration-500 ease-out group-hover:scale-105 ${
+                isScrolled ? "h-11 sm:h-12" : "h-14 sm:h-16"
+              }`}
             />
             <div className="h-10 w-px bg-border/60 hidden sm:block" />
             <div className="flex flex-col justify-center hidden sm:flex">
