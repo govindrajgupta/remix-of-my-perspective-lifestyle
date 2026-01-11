@@ -25,7 +25,7 @@ const NavHeader = () => {
             <img 
               src={logo} 
               alt="Nyaya Alamban Logo" 
-              className="h-20 sm:h-24 w-auto"
+              className="h-20 sm:h-24 w-auto -my-4"
             />
             <div className="flex flex-col justify-center">
               <span className="font-serif text-xl sm:text-2xl font-bold text-primary tracking-wide leading-tight">
