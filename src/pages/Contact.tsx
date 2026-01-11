@@ -25,36 +25,106 @@ const Contact = () => {
     setIsSubmitting(false);
   };
 
+  const contactInfo = [
+    { icon: Mail, title: "Email", value: "contact@nyayaalamban.org" },
+    { icon: Phone, title: "Phone", value: "+91 XXXXX XXXXX" },
+    { icon: MapPin, title: "Address", value: "India" },
+  ];
+
   return (
     <div className="min-h-screen bg-background">
       <NavHeader />
-      <main>
-        <section className="section-padding trust-gradient">
-          <div className="container-wide text-center">
-            <h1 className="font-serif text-4xl md:text-5xl font-bold text-primary mb-6">Contact Us</h1>
-            <p className="text-lg text-muted-foreground">Reach out for legal assistance or queries.</p>
-          </div>
+      
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Hero Section */}
+        <section className="py-12 md:py-16 text-center animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-slide-down">
+            Contact Us
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto animate-slide-up stagger-1">
+            Reach out for legal assistance or any queries about our services.
+          </p>
         </section>
-        <section className="section-padding bg-background">
-          <div className="container-wide grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <h2 className="font-serif text-2xl font-bold text-primary mb-6">Send a Message</h2>
-              <Input name="name" value={formData.name} onChange={handleChange} required placeholder="Your Name" />
-              <Input name="email" type="email" value={formData.email} onChange={handleChange} required placeholder="Email" />
-              <Input name="subject" value={formData.subject} onChange={handleChange} placeholder="Subject" />
-              <Textarea name="message" value={formData.message} onChange={handleChange} required rows={5} placeholder="Your Message" />
-              <Button type="submit" disabled={isSubmitting}><Send className="w-4 h-4 mr-2" />{isSubmitting ? "Sending..." : "Send"}</Button>
-            </form>
-            <div className="space-y-6">
-              <h2 className="font-serif text-2xl font-bold text-primary mb-6">Get in Touch</h2>
-              <div className="flex items-start gap-4"><div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center"><Mail className="w-5 h-5 text-primary" /></div><div><h4 className="font-semibold">Email</h4><p className="text-muted-foreground">contact@nyayaalamban.org</p></div></div>
-              <div className="flex items-start gap-4"><div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center"><Phone className="w-5 h-5 text-primary" /></div><div><h4 className="font-semibold">Phone</h4><p className="text-muted-foreground">+91 XXXXX XXXXX</p></div></div>
-              <div className="flex items-start gap-4"><div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center"><MapPin className="w-5 h-5 text-primary" /></div><div><h4 className="font-semibold">Address</h4><p className="text-muted-foreground">India</p></div></div>
-              <div className="bg-muted rounded-lg h-48 flex items-center justify-center"><p className="text-muted-foreground text-sm">Map placeholder</p></div>
+
+        {/* Contact Section */}
+        <section className="py-12 md:py-16">
+          <div className="bg-muted rounded-[2.5rem] p-8 md:p-12 lg:p-16 animate-scale-in">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+              {/* Form */}
+              <div>
+                <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <Input 
+                    name="name" 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                    required 
+                    placeholder="Your Name"
+                    className="rounded-xl bg-background border-0"
+                  />
+                  <Input 
+                    name="email" 
+                    type="email" 
+                    value={formData.email} 
+                    onChange={handleChange} 
+                    required 
+                    placeholder="Email Address"
+                    className="rounded-xl bg-background border-0"
+                  />
+                  <Input 
+                    name="subject" 
+                    value={formData.subject} 
+                    onChange={handleChange} 
+                    placeholder="Subject"
+                    className="rounded-xl bg-background border-0"
+                  />
+                  <Textarea 
+                    name="message" 
+                    value={formData.message} 
+                    onChange={handleChange} 
+                    required 
+                    rows={5} 
+                    placeholder="Your Message"
+                    className="rounded-xl bg-background border-0 resize-none"
+                  />
+                  <Button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="rounded-full px-8 py-6 hover:scale-105 transition-all"
+                  >
+                    <Send className="w-4 h-4 mr-2" />
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </Button>
+                </form>
+              </div>
+
+              {/* Contact Info */}
+              <div>
+                <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
+                <div className="space-y-6">
+                  {contactInfo.map((item, index) => (
+                    <div key={index} className="flex items-start gap-4">
+                      <div className="w-12 h-12 rounded-full bg-background flex items-center justify-center flex-shrink-0">
+                        <item.icon className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold">{item.title}</h4>
+                        <p className="text-muted-foreground">{item.value}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Map Placeholder */}
+                <div className="mt-8 bg-background rounded-2xl h-48 flex items-center justify-center">
+                  <p className="text-muted-foreground text-sm">Map placeholder</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
       </main>
+      
       <Footer />
     </div>
   );

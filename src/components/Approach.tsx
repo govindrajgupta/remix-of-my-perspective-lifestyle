@@ -11,34 +11,34 @@ const Approach = () => {
   ];
 
   return (
-    <section className="section-padding surface-grey">
-      <div className="container-wide">
+    <section className="py-16 md:py-24 bg-muted rounded-[2.5rem] mx-3 md:mx-6 lg:mx-8 mb-12 animate-fade-in">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-primary mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-slide-up">
             Our Approach
           </h2>
-          <p className="text-muted-foreground text-lg max-w-3xl mx-auto">
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto animate-slide-up stagger-1">
             We collaborate with diverse professionals to provide comprehensive 
             legal assistance and resolve disputes before they reach the courts.
           </p>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 mb-12">
           {collaborators.map((item, index) => (
             <div 
               key={index}
-              className="bg-background rounded-lg p-6 text-center border border-border hover:shadow-md transition-shadow"
+              className="bg-background rounded-2xl p-6 text-center transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
             >
-              <item.icon className="w-10 h-10 text-primary mx-auto mb-3" />
-              <h4 className="font-semibold text-foreground text-sm mb-1">{item.title}</h4>
+              <item.icon className="w-8 h-8 mx-auto mb-3" />
+              <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
               <p className="text-xs text-muted-foreground">{item.description}</p>
             </div>
           ))}
         </div>
         
-        <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="bg-background rounded-lg p-8 border border-border">
-            <h3 className="font-serif text-xl font-semibold text-primary mb-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 max-w-4xl mx-auto">
+          <div className="bg-background rounded-2xl p-8 transition-all duration-300 hover:shadow-lg">
+            <h3 className="text-xl font-bold mb-4">
               Reducing Court Pendency
             </h3>
             <p className="text-muted-foreground leading-relaxed">
@@ -48,8 +48,8 @@ const Approach = () => {
             </p>
           </div>
           
-          <div className="bg-background rounded-lg p-8 border border-border">
-            <h3 className="font-serif text-xl font-semibold text-primary mb-4">
+          <div className="bg-background rounded-2xl p-8 transition-all duration-300 hover:shadow-lg">
+            <h3 className="text-xl font-bold mb-4">
               Supporting Undertrial Prisoners
             </h3>
             <p className="text-muted-foreground leading-relaxed">

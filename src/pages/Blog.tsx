@@ -36,85 +36,80 @@ const Blog = () => {
     <div className="min-h-screen bg-background">
       <NavHeader />
       
-      <main>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
-        <section className="section-padding trust-gradient">
-          <div className="container-wide">
-            <div className="max-w-3xl mx-auto text-center">
-              <h1 className="font-serif text-4xl md:text-5xl font-bold text-primary mb-6">
-                Blog & Articles
-              </h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Stay informed about legal rights, justice initiatives, and 
-                updates from Nyaya Alamban.
-              </p>
-            </div>
-          </div>
+        <section className="py-12 md:py-16 text-center animate-fade-in">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-slide-down">
+            Blog & Articles
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto animate-slide-up stagger-1">
+            Stay informed about legal rights, justice initiatives, and 
+            updates from Nyaya Alamban.
+          </p>
         </section>
 
         {/* Blog Posts */}
-        <section className="section-padding bg-background">
-          <div className="container-wide">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              {staticPosts.map((post) => (
-                <article 
-                  key={post.id} 
-                  className="card-professional overflow-hidden group"
-                >
-                  {/* Image Placeholder */}
-                  <div className="h-48 bg-muted flex items-center justify-center">
-                    <div className="text-muted-foreground text-sm">Featured Image</div>
+        <section className="py-8 md:py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+            {staticPosts.map((post, index) => (
+              <article 
+                key={post.id} 
+                className="bg-muted rounded-[2rem] overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-slide-up"
+                style={{ animationDelay: `${0.1 * (index + 1)}s`, opacity: 0 }}
+              >
+                {/* Image Placeholder */}
+                <div className="h-48 bg-background/50 flex items-center justify-center">
+                  <div className="text-muted-foreground text-sm">Featured Image</div>
+                </div>
+                
+                <div className="p-6">
+                  {/* Meta */}
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                    <span className="flex items-center gap-1">
+                      <Calendar className="w-4 h-4" />
+                      {new Date(post.created_at).toLocaleDateString('en-IN', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric'
+                      })}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <User className="w-4 h-4" />
+                      {post.author}
+                    </span>
                   </div>
                   
-                  <div className="p-6">
-                    {/* Meta */}
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {new Date(post.created_at).toLocaleDateString('en-IN', {
-                          year: 'numeric',
-                          month: 'short',
-                          day: 'numeric'
-                        })}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <User className="w-4 h-4" />
-                        {post.author}
-                      </span>
-                    </div>
-                    
-                    {/* Title */}
-                    <h2 className="font-serif text-xl font-bold text-primary mb-3 group-hover:text-secondary transition-colors">
-                      {post.title}
-                    </h2>
-                    
-                    {/* Excerpt */}
-                    <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                      {post.excerpt}
-                    </p>
-                    
-                    {/* Read More */}
-                    <Link 
-                      to={`/blog/${post.id}`}
-                      className="inline-flex items-center gap-2 text-primary font-medium text-sm hover:text-secondary transition-colors"
-                    >
-                      Read More
-                      <ArrowRight className="w-4 h-4" />
-                    </Link>
-                  </div>
-                </article>
-              ))}
-            </div>
-            
-            {/* Info about CMS */}
-            <div className="mt-16 max-w-2xl mx-auto text-center">
-              <div className="bg-saffron-light rounded-lg p-6 border border-secondary/20">
-                <p className="text-muted-foreground text-sm">
-                  <strong className="text-primary">Note:</strong> Blog posts are currently 
-                  displayed as static content. Connect to Lovable Cloud to enable the 
-                  full CMS with admin dashboard for creating, editing, and managing posts.
-                </p>
-              </div>
+                  {/* Title */}
+                  <h2 className="text-xl font-bold mb-3 group-hover:opacity-70 transition-opacity">
+                    {post.title}
+                  </h2>
+                  
+                  {/* Excerpt */}
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                    {post.excerpt}
+                  </p>
+                  
+                  {/* Read More */}
+                  <Link 
+                    to={`/blog/${post.id}`}
+                    className="inline-flex items-center gap-2 font-medium text-sm hover:gap-3 transition-all"
+                  >
+                    Read More
+                    <ArrowRight className="w-4 h-4" />
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+          
+          {/* Info about CMS */}
+          <div className="mt-16 max-w-2xl mx-auto text-center">
+            <div className="bg-muted rounded-2xl p-6">
+              <p className="text-muted-foreground text-sm">
+                <strong>Note:</strong> Blog posts are currently 
+                displayed as static content. Connect to Lovable Cloud to enable the 
+                full CMS with admin dashboard for creating, editing, and managing posts.
+              </p>
             </div>
           </div>
         </section>
