@@ -4,6 +4,7 @@ import Hero from "@/components/Hero";
 import AboutIntro from "@/components/AboutIntro";
 import Philosophy from "@/components/Philosophy";
 import Approach from "@/components/Approach";
+import RecentBlogs from "@/components/RecentBlogs";
 import CallToAction from "@/components/CallToAction";
 
 const Index = () => {
@@ -15,6 +16,7 @@ const Index = () => {
         <AboutIntro />
         <Philosophy />
         <Approach />
+        <RecentBlogs />
         <CallToAction />
       </main>
       <Footer />
