@@ -1,115 +1,88 @@
+"use client";
+import {
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from "@/components/ui/resizable-navbar";
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronRight } from "lucide-react";
-import { useState, useEffect } from "react";
-import logo from "@/assets/nyaya-alamban-logo-transparent.png";
+import { Phone } from "lucide-react";
 
 const NavHeader = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const location = useLocation();
-
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Blog", path: "/blog" },
-    { name: "About", path: "/about" },
-    { name: "Contact", path: "/contact" },
+  const navItems = [
+    { name: "Home", link: "/" },
+    { name: "Blog", link: "/blog" },
+    { name: "About", link: "/about" },
+    { name: "Contact", link: "/contact" },
   ];
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
 
   const isActive = (path: string) => location.pathname === path;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
   return (
-    <header 
-      className={`sticky top-0 z-50 transition-all duration-500 ease-out ${
-        isScrolled 
-          ? "bg-background/95 backdrop-blur-xl shadow-[0_4px_30px_-4px_rgba(0,0,0,0.1)] border-b border-border/30" 
-          : "bg-background shadow-none border-b border-transparent"
-      }`}
-    >
-      <div className="container-wide">
-        <nav className={`flex items-center justify-between transition-all duration-500 ease-out ${
-          isScrolled ? "py-3" : "py-4"
-        }`}>
-          {/* Logo with refined styling matching footer */}
-          <Link to="/" className="flex items-center gap-4 group">
-            <img 
-              src={logo} 
-              alt="Nyaya Alamban Logo" 
-              className={`w-auto transition-all duration-500 ease-out group-hover:scale-105 ${
-                isScrolled ? "h-11 sm:h-12" : "h-14 sm:h-16"
+    <Navbar>
+      {/* Desktop Navigation */}
+      <NavBody>
+        <NavbarLogo />
+        <NavItems items={navItems} />
+        <div className="flex items-center gap-2">
+          <NavbarButton href="/contact" variant="accent">
+            <Phone className="w-4 h-4" />
+            Get Free Consultation
+          </NavbarButton>
+        </div>
+      </NavBody>
+
+      {/* Mobile Navigation */}
+      <MobileNav>
+        <MobileNavHeader>
+          <NavbarLogo />
+          <MobileNavToggle
+            isOpen={isMobileMenuOpen}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          />
+        </MobileNavHeader>
+
+        <MobileNavMenu
+          isOpen={isMobileMenuOpen}
+          onClose={() => setIsMobileMenuOpen(false)}
+        >
+          {navItems.map((item, idx) => (
+            <Link
+              key={`mobile-link-${idx}`}
+              to={item.link}
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`w-full px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                isActive(item.link)
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
               }`}
-            />
-            <div className="h-10 w-px bg-border/60 hidden sm:block" />
-            <div className="flex flex-col justify-center hidden sm:flex">
-              <span className="font-serif text-xl font-bold text-foreground tracking-wide leading-tight">
-                Nyaya Alamban
-              </span>
-              <span className="text-[10px] text-muted-foreground font-medium tracking-[0.25em] uppercase leading-tight">
-                In Law We Trust
-              </span>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation with refined styling */}
-          <div className="hidden md:flex items-center gap-2">
-            {navLinks.map((link, index) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                style={{ animationDelay: `${index * 50}ms` }}
-                className={`px-5 py-2.5 rounded-lg font-medium text-sm tracking-wide transition-all duration-300 animate-fade-in ${
-                  isActive(link.path)
-                    ? "bg-primary text-primary-foreground shadow-md"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted/80"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            >
+              {item.name}
+            </Link>
+          ))}
+          <div className="flex w-full flex-col gap-3 pt-4 border-t border-border mt-2">
+            <NavbarButton
+              href="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              variant="accent"
+              className="w-full"
+            >
+              <Phone className="w-4 h-4" />
+              Get Free Consultation
+            </NavbarButton>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2.5 rounded-lg hover:bg-muted transition-colors"
-            aria-label="Toggle menu"
-          >
-            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </nav>
-
-        {/* Mobile Navigation with refined styling */}
-        {isMenuOpen && (
-          <div className="md:hidden py-5 border-t border-border/50 animate-slide-down">
-            <div className="flex flex-col gap-1.5">
-              {navLinks.map((link, index) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  style={{ animationDelay: `${index * 75}ms` }}
-                  className={`flex items-center justify-between px-4 py-3.5 rounded-lg font-medium tracking-wide transition-all duration-300 animate-slide-in-left ${
-                    isActive(link.path)
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted/80"
-                  }`}
-                >
-                  {link.name}
-                  <ChevronRight size={16} className="opacity-40" />
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </header>
+        </MobileNavMenu>
+      </MobileNav>
+    </Navbar>
   );
 };
 
