@@ -11,9 +11,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-3 mb-4">
-              <img src={logo} alt="Nyaya Alamban" className="h-10 w-auto" />
-              <span className="text-xl font-bold font-serif">Nyaya Alamban</span>
+            <Link to="/" className="flex items-center gap-4 mb-4">
+              <img src={logo} alt="Nyaya Alamban" className="h-16 w-auto drop-shadow-md" />
+              <span className="text-2xl font-bold font-serif">Nyaya Alamban</span>
             </Link>
             <p className="text-muted-foreground leading-relaxed max-w-md">
               Justice for all. Providing legal assistance and promoting 
