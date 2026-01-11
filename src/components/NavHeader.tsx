@@ -17,7 +17,7 @@ const NavHeader = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
+    <header className="bg-background/80 backdrop-blur-md border-b border-border/50 sticky top-0 z-50 shadow-sm">
       <div className="container-wide">
         <nav className="flex items-center justify-between py-4">
           {/* Logo */}
