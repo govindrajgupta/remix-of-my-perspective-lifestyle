@@ -12,8 +12,8 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   featured_image: string | null;
-  video_url: string | null;
-  category: string;
+  video_url?: string | null;
+  category?: string;
   views: number;
   author: string;
   published: boolean;

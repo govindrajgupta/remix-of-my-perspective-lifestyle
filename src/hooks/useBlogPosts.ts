@@ -11,7 +11,7 @@ export const useBlogPosts = (publishedOnly: boolean = true) => {
       setLoading(true);
       let query = supabase
         .from('blog_posts')
-        .select('*')
+        .select('id, title, excerpt, content, featured_image, author, views, published, created_at, updated_at')
         .order('created_at', { ascending: false });
 
       if (publishedOnly) {
@@ -47,7 +47,7 @@ export const useBlogPost = (id: string) => {
         setLoading(true);
         const { data, error } = await supabase
           .from('blog_posts')
-          .select('*')
+          .select('id, title, excerpt, content, featured_image, author, views, published, created_at, updated_at')
           .eq('id', id)
           .maybeSingle();
 
