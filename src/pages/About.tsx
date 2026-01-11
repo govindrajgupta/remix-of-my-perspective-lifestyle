@@ -1,114 +1,49 @@
-import Header from "@/components/Header";
-import { Mail } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import NavHeader from "@/components/NavHeader";
+import Footer from "@/components/Footer";
+import { Target, Eye, Users, Heart } from "lucide-react";
+import logo from "@/assets/nyaya-alamban-logo.png";
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-background animate-fade-in">
-      <Header />
-      
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        {/* Hero Section */}
-        <div className="mb-16 text-center space-y-6">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight animate-slide-down">
-            About Perspective
-          </h1>
-          <p className="text-lg text-muted-foreground leading-relaxed animate-slide-up stagger-1">
-            A space for exploring ideas, finding inspiration, and discovering new ways of seeing the world.
-          </p>
-        </div>
-
-        {/* Story Section */}
-        <section className="mb-16 space-y-6 text-muted-foreground animate-slide-up stagger-2">
-          <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
-          <p>
-            Perspective began with a simple question: What if we could create a space where thoughtful ideas, 
-            meaningful stories, and practical wisdom come together to enrich our daily lives?
-          </p>
-          <p>
-            In a world saturated with information, we felt the need for something different—a publication that 
-            prioritizes depth over speed, quality over quantity, and authentic connection over viral content. 
-            Perspective is our answer to that need.
-          </p>
-          <p>
-            We explore topics that matter: wellness practices that actually work, travel experiences that transform 
-            us, creative pursuits that bring joy, and personal growth strategies that lead to lasting change. 
-            Our approach is grounded in curiosity, backed by research, and enriched by lived experience.
-          </p>
-        </section>
-
-        {/* Mission Section */}
-        <section className="mb-16 rounded-2xl bg-card p-8 md:p-12">
-          <h2 className="text-3xl font-bold mb-6">Our Mission</h2>
-          <div className="space-y-4 text-muted-foreground">
-            <p>
-              We believe that how we see the world shapes how we experience it. Perspective is dedicated to 
-              offering fresh viewpoints, practical insights, and inspiring stories that help readers:
-            </p>
-            <ul className="space-y-3 ml-6">
-              <li className="flex items-start">
-                <span className="mr-3 mt-1">•</span>
-                <span>Cultivate mindful, balanced lifestyles that prioritize wellbeing</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1">•</span>
-                <span>Explore the world with curiosity and respect</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1">•</span>
-                <span>Express themselves authentically through creative pursuits</span>
-              </li>
-              <li className="flex items-start">
-                <span className="mr-3 mt-1">•</span>
-                <span>Embrace personal growth as a lifelong journey</span>
-              </li>
-            </ul>
-          </div>
-        </section>
-
-        {/* Values Section */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-bold mb-8">Our Values</h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="p-6 rounded-xl bg-muted">
-              <h3 className="text-xl font-semibold mb-3">Authenticity</h3>
-              <p className="text-muted-foreground">
-                We share real experiences, honest reflections, and genuine insights—not curated perfection.
-              </p>
-            </div>
-            <div className="p-6 rounded-xl bg-muted">
-              <h3 className="text-xl font-semibold mb-3">Thoughtfulness</h3>
-              <p className="text-muted-foreground">
-                Every article is carefully researched, thoughtfully written, and designed to add real value.
-              </p>
-            </div>
-            <div className="p-6 rounded-xl bg-muted">
-              <h3 className="text-xl font-semibold mb-3">Inclusivity</h3>
-              <p className="text-muted-foreground">
-                We welcome diverse perspectives and believe everyone's journey deserves respect and representation.
-              </p>
-            </div>
-            <div className="p-6 rounded-xl bg-muted">
-              <h3 className="text-xl font-semibold mb-3">Sustainability</h3>
-              <p className="text-muted-foreground">
-                We promote practices that are sustainable for individuals, communities, and the planet.
-              </p>
+    <div className="min-h-screen bg-background">
+      <NavHeader />
+      <main>
+        <section className="section-padding trust-gradient">
+          <div className="container-wide">
+            <div className="max-w-3xl mx-auto text-center">
+              <h1 className="font-serif text-4xl md:text-5xl font-bold text-primary mb-6">About Nyaya Alamban</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">A pillar of hope for justice, founded on dialogue, fairness, and equal access to legal assistance.</p>
             </div>
           </div>
         </section>
-
-        {/* CTA Section */}
-        <section className="text-center py-12 rounded-2xl bg-card">
-          <h2 className="text-3xl font-bold mb-4">Join Our Community</h2>
-          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Subscribe to receive our latest articles, insights, and inspiration directly in your inbox.
-          </p>
-          <Button className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-8">
-            <Mail className="mr-2 h-4 w-4" />
-            Subscribe Now
-          </Button>
+        <section className="section-padding bg-background">
+          <div className="container-wide">
+            <div className="max-w-4xl mx-auto flex flex-col md:flex-row items-center gap-12">
+              <div className="md:w-1/3"><img src={logo} alt="Nyaya Alamban Logo" className="w-full max-w-[250px] mx-auto" /></div>
+              <div className="md:w-2/3">
+                <h2 className="font-serif text-2xl md:text-3xl font-bold text-primary mb-6">Our Story</h2>
+                <p className="text-foreground leading-relaxed mb-4"><strong className="text-primary">Nyaya Alamban</strong> was founded by Social Worker <strong className="text-primary">Mr. Raghavenddhiraa</strong> to provide legal assistance and prevent unnecessary litigation through constructive dialogue.</p>
+                <p className="text-foreground leading-relaxed mb-4"><strong>"Nyaya"</strong> means <em>Justice</em> and <strong>"Alamban"</strong> means <em>Hope/Pillar</em>. Our guiding principle: <strong className="text-primary">"Trust in Law"</strong>.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section className="section-padding surface-soft">
+          <div className="container-wide max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="card-professional p-8">
+              <Target className="w-7 h-7 text-primary mb-4" />
+              <h3 className="font-serif text-xl font-bold text-primary mb-4">Our Mission</h3>
+              <p className="text-muted-foreground">Provide accessible legal assistance, reduce court pendency, and support undertrial prisoners.</p>
+            </div>
+            <div className="card-professional p-8">
+              <Eye className="w-7 h-7 text-secondary mb-4" />
+              <h3 className="font-serif text-xl font-bold text-primary mb-4">Our Vision</h3>
+              <p className="text-muted-foreground">A society where justice is accessible to all and disputes are resolved amicably.</p>
+            </div>
+          </div>
         </section>
       </main>
+      <Footer />
     </div>
   );
 };
