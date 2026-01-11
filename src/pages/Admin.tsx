@@ -40,6 +40,9 @@ const Admin = () => {
     excerpt: "",
     content: "",
     featured_image: "",
+    video_url: "",
+    category: "General",
+    views: 0,
     author: "Admin",
     published: false,
   });
@@ -50,6 +53,9 @@ const Admin = () => {
       excerpt: "",
       content: "",
       featured_image: "",
+      video_url: "",
+      category: "General",
+      views: 0,
       author: "Admin",
       published: false,
     });
@@ -68,6 +74,9 @@ const Admin = () => {
       excerpt: post.excerpt,
       content: post.content,
       featured_image: post.featured_image || "",
+      video_url: post.video_url || "",
+      category: post.category || "General",
+      views: post.views || 0,
       author: post.author,
       published: post.published,
     });
@@ -94,6 +103,7 @@ const Admin = () => {
         await createBlogPost({
           ...formData,
           featured_image: formData.featured_image || null,
+          video_url: formData.video_url || null,
         });
         toast({ title: "Post created successfully" });
       }
