@@ -21,19 +21,19 @@ const NavHeader = () => {
       <div className="container-wide">
         <nav className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-5">
+          <Link to="/" className="flex items-center gap-4">
             <img 
               src={logo} 
               alt="Nyaya Alamban Logo" 
-              className="h-24 sm:h-28 w-auto"
+              className="h-14 sm:h-16 w-auto"
             />
-            <div>
-              <span className="font-serif text-2xl sm:text-3xl font-bold text-primary tracking-wide block">
+            <div className="flex flex-col justify-center">
+              <span className="font-serif text-xl sm:text-2xl font-bold text-primary tracking-wide leading-tight">
                 Nyaya Alamban
               </span>
-              <p className="text-sm sm:text-base text-primary/80 font-semibold tracking-widest uppercase">
+              <span className="text-xs sm:text-sm text-muted-foreground font-medium tracking-widest uppercase leading-tight">
                 In Law We Trust
-              </p>
+              </span>
             </div>
           </Link>
 
