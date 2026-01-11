@@ -23,7 +23,7 @@ const Blog = () => {
     <div className="min-h-screen bg-background">
       <NavHeader />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Editorial Hero Section */}
         <section className="py-16 md:py-24 text-center animate-fade-in">
           <Badge variant="outline" className="mb-6 px-4 py-1.5 text-sm">

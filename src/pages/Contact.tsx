@@ -35,7 +35,7 @@ const Contact = () => {
     <div className="min-h-screen bg-background">
       <NavHeader />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero Section */}
         <section className="py-12 md:py-16 text-center animate-fade-in">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-slide-down">
