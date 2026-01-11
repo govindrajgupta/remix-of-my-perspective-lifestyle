@@ -19,7 +19,18 @@ const ScrollReveal = ({
   threshold = 0.1
 }: ScrollRevealProps) => {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  // Our components often pass delay as milliseconds (e.g. 100, 150, 300).
+  // Framer Motion expects seconds, so normalize here.
+  const delaySeconds = delay >= 10 ? delay / 1000 : delay;
+  const durationSeconds = duration >= 10 ? duration / 1000 : duration;
+
+  const isInView = useInView(ref, {
+    once: true,
+    // trigger a bit earlier so content doesn't stay invisible on small viewports
+    margin: "0px 0px -10% 0px",
+    amount: threshold,
+  });
 
   const getVariants = () => {
     const directions = {
@@ -40,8 +51,8 @@ const ScrollReveal = ({
       initial={variants.initial}
       animate={isInView ? variants.animate : variants.initial}
       transition={{
-        duration,
-        delay,
+        duration: durationSeconds,
+        delay: delaySeconds,
         ease: [0.16, 1, 0.3, 1],
       }}
       className={className}
