@@ -164,11 +164,11 @@ const BlogPost = () => {
         {/* Featured Image */}
         {post.featured_image && (
           <figure className="mb-10 animate-scale-in">
-            <div className="rounded-2xl overflow-hidden border border-border">
+            <div className="rounded-2xl overflow-hidden border border-border bg-muted flex items-center justify-center">
               <img 
                 src={post.featured_image} 
                 alt={post.title}
-                className="w-full h-auto max-h-[500px] object-cover"
+                className="w-full h-auto max-h-[600px] object-contain"
               />
             </div>
           </figure>
