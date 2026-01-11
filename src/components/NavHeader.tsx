@@ -17,21 +17,23 @@ const NavHeader = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="bg-background border-b border-border sticky top-0 z-50">
+    <header className="bg-background border-b border-border sticky top-0 z-50 shadow-sm">
       <div className="container-wide">
-        <nav className="flex items-center justify-between h-24">
+        <nav className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-4">
+          <Link to="/" className="flex items-center gap-5">
             <img 
               src={logo} 
               alt="Nyaya Alamban Logo" 
-              className="h-20 w-auto drop-shadow-md"
+              className="h-24 sm:h-28 w-auto"
             />
-            <div className="hidden sm:block">
-              <span className="font-serif text-2xl font-bold text-primary tracking-wide">
+            <div>
+              <span className="font-serif text-2xl sm:text-3xl font-bold text-primary tracking-wide block">
                 Nyaya Alamban
               </span>
-              <p className="text-sm text-muted-foreground font-medium">In Law We Trust</p>
+              <p className="text-sm sm:text-base text-primary/80 font-semibold tracking-widest uppercase">
+                In Law We Trust
+              </p>
             </div>
           </Link>
 
