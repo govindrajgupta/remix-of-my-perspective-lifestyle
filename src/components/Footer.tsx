@@ -1,112 +1,125 @@
 import { Link } from "react-router-dom";
-import { Instagram, Facebook, Linkedin } from "lucide-react";
+import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
 import logo from "@/assets/nyaya-alamban-logo.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  const quickLinks = [
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog" },
+    { name: "About Us", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  const legalLinks = [
+    { name: "Privacy Policy", path: "/privacy" },
+    { name: "Terms of Service", path: "/terms" },
+  ];
+
+  const socialLinks = [
+    { icon: Instagram, href: "#", label: "Instagram" },
+    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Linkedin, href: "#", label: "LinkedIn" },
+  ];
+
   return (
-    <footer className="bg-muted py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+    <footer className="bg-primary text-primary-foreground">
+      {/* Main Footer */}
+      <div className="container-wide py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Brand */}
-          <div className="md:col-span-2">
-            <Link to="/" className="flex items-center gap-5 mb-4">
-              <img src={logo} alt="Nyaya Alamban" className="h-20 w-auto" />
+          <div className="lg:col-span-2 space-y-6">
+            <Link to="/" className="flex items-center gap-4">
+              <div className="bg-primary-foreground rounded-xl p-2">
+                <img src={logo} alt="Nyaya Alamban" className="h-12 w-auto" />
+              </div>
               <div>
-                <span className="text-2xl font-bold font-serif block">Nyaya Alamban</span>
-                <span className="text-sm font-semibold text-primary/80 tracking-widest uppercase">In Law We Trust</span>
+                <span className="text-xl font-bold font-serif block">Nyaya Alamban</span>
+                <span className="text-xs font-medium text-primary-foreground/70 tracking-widest uppercase">
+                  In Law We Trust
+                </span>
               </div>
             </Link>
-            <p className="text-muted-foreground leading-relaxed max-w-md">
+            
+            <p className="text-primary-foreground/80 leading-relaxed max-w-md">
               Justice for all. Providing legal assistance and promoting 
               alternative dispute resolution for those in need.
             </p>
-            <p className="text-muted-foreground mt-3 italic">
-              "In Law We Trust"
-            </p>
             
             {/* Social Links */}
-            <div className="flex items-center gap-4 mt-6">
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full border border-border hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-center"
-                aria-label="Instagram"
-              >
-                <Instagram className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full border border-border hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-center"
-                aria-label="Facebook"
-              >
-                <Facebook className="w-4 h-4" />
-              </a>
-              <a
-                href="#"
-                className="w-10 h-10 rounded-full border border-border hover:border-primary hover:bg-primary hover:text-primary-foreground transition-all flex items-center justify-center"
-                aria-label="LinkedIn"
-              >
-                <Linkedin className="w-4 h-4" />
-              </a>
+            <div className="flex items-center gap-3">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="w-10 h-10 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground hover:text-primary transition-all flex items-center justify-center"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-4 h-4" />
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-semibold text-lg mb-6">Quick Links</h4>
             <ul className="space-y-3">
-              <li>
-                <Link 
-                  to="/" 
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/blog" 
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/about" 
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/contact" 
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  Contact
-                </Link>
-              </li>
+              {quickLinks.map((link) => (
+                <li key={link.path}>
+                  <Link 
+                    to={link.path} 
+                    className="group flex items-center gap-2 text-primary-foreground/70 hover:text-primary-foreground transition-colors"
+                  >
+                    {link.name}
+                    <ArrowUpRight className="w-3 h-3 opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold mb-4">Contact Us</h4>
-            <div className="space-y-3 text-muted-foreground">
-              <p>contact@nyayaalamban.org</p>
-              <p>+91 XXXXX XXXXX</p>
-              <p>India</p>
-            </div>
+            <h4 className="font-semibold text-lg mb-6">Contact Us</h4>
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <Mail className="w-5 h-5 mt-0.5 text-accent" />
+                <span className="text-primary-foreground/70">contact@nyayaalamban.org</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Phone className="w-5 h-5 mt-0.5 text-accent" />
+                <span className="text-primary-foreground/70">+91 XXXXX XXXXX</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <MapPin className="w-5 h-5 mt-0.5 text-accent" />
+                <span className="text-primary-foreground/70">India</span>
+              </li>
+            </ul>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-border pt-8">
-          <p className="text-center text-muted-foreground text-sm">
-            © {currentYear} Nyaya Alamban. All rights reserved.
-          </p>
+      {/* Bottom Bar */}
+      <div className="border-t border-primary-foreground/10">
+        <div className="container-wide py-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p className="text-sm text-primary-foreground/60">
+              © {currentYear} Nyaya Alamban. All rights reserved.
+            </p>
+            <div className="flex items-center gap-6">
+              {legalLinks.map((link) => (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  className="text-sm text-primary-foreground/60 hover:text-primary-foreground transition-colors"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </footer>
