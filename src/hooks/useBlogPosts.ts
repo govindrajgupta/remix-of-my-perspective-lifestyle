@@ -11,7 +11,7 @@ export const useBlogPosts = (publishedOnly: boolean = true) => {
       setLoading(true);
       let query = supabase
         .from('blog_posts')
-        .select('id, title, excerpt, content, featured_image, author, views, published, created_at, updated_at')
+        .select('*')
         .order('created_at', { ascending: false });
 
       if (publishedOnly) {
@@ -47,7 +47,7 @@ export const useBlogPost = (id: string) => {
         setLoading(true);
         const { data, error } = await supabase
           .from('blog_posts')
-          .select('id, title, excerpt, content, featured_image, author, views, published, created_at, updated_at')
+          .select('*')
           .eq('id', id)
           .maybeSingle();
 
@@ -70,26 +70,64 @@ export const useBlogPost = (id: string) => {
 
 // Admin functions
 export const createBlogPost = async (post: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>) => {
-  const { data, error } = await supabase
-    .from('blog_posts')
-    .insert([post])
-    .select()
-    .single();
+  const removableColumns = ['video_url', 'category'] as const;
+  let payload: Record<string, any> = { ...post };
 
-  if (error) throw error;
-  return data;
+  for (let attempt = 0; attempt <= removableColumns.length; attempt++) {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .insert([payload])
+      .select()
+      .single();
+
+    if (!error) return data;
+
+    const missingColumn = removableColumns.find(
+      (col) => typeof error?.message === 'string' && error.message.includes(`Could not find the '${col}' column`)
+    );
+
+    if (missingColumn && missingColumn in payload) {
+      const nextPayload = { ...payload };
+      delete nextPayload[missingColumn];
+      payload = nextPayload;
+      continue;
+    }
+
+    throw error;
+  }
+
+  throw new Error('Failed to create blog post');
 };
 
 export const updateBlogPost = async (id: string, updates: Partial<BlogPost>) => {
-  const { data, error } = await supabase
-    .from('blog_posts')
-    .update({ ...updates, updated_at: new Date().toISOString() })
-    .eq('id', id)
-    .select()
-    .single();
+  const removableColumns = ['video_url', 'category'] as const;
+  let payload: Record<string, any> = { ...updates, updated_at: new Date().toISOString() };
 
-  if (error) throw error;
-  return data;
+  for (let attempt = 0; attempt <= removableColumns.length; attempt++) {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .update(payload)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (!error) return data;
+
+    const missingColumn = removableColumns.find(
+      (col) => typeof error?.message === 'string' && error.message.includes(`Could not find the '${col}' column`)
+    );
+
+    if (missingColumn && missingColumn in payload) {
+      const nextPayload = { ...payload };
+      delete nextPayload[missingColumn];
+      payload = nextPayload;
+      continue;
+    }
+
+    throw error;
+  }
+
+  throw new Error('Failed to update blog post');
 };
 
 export const deleteBlogPost = async (id: string) => {
