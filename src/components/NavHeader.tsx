@@ -19,19 +19,19 @@ const NavHeader = () => {
   return (
     <header className="bg-background/80 backdrop-blur-md border-b border-border/50 sticky top-0 z-50 shadow-sm">
       <div className="container-wide">
-        <nav className="flex items-center justify-between py-3">
+        <nav className="flex items-center justify-between py-4">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3">
+          <Link to="/" className="flex items-center gap-4">
             <img 
               src={logo} 
               alt="Nyaya Alamban Logo" 
-              className="h-12 w-auto"
+              className="h-20 sm:h-24 w-auto -my-4"
             />
-            <div className="flex flex-col">
-              <span className="font-serif text-lg sm:text-xl font-bold text-primary leading-none">
+            <div className="flex flex-col justify-center">
+              <span className="font-serif text-xl sm:text-2xl font-bold text-primary tracking-wide leading-tight">
                 Nyaya Alamban
               </span>
-              <span className="text-[10px] sm:text-xs text-muted-foreground font-medium tracking-wider uppercase mt-0.5">
+              <span className="text-xs sm:text-sm text-muted-foreground font-medium tracking-widest uppercase leading-tight">
                 In Law We Trust
               </span>
             </div>
