@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "@/hooks/useBlogPosts";
+import { useAllComments, approveComment, rejectComment } from "@/hooks/useComments";
 import { BlogPost } from "@/lib/supabase";
-import { Plus, Edit, Trash2, Eye, EyeOff, Loader2, Video, Image, Calendar, User, LayoutDashboard, FileText } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, EyeOff, Loader2, Video, Image, Calendar, User, LayoutDashboard, FileText, MessageSquare, Check, X, Mail } from "lucide-react";
 import ImageUpload from "@/components/ImageUpload";
 import VideoUpload from "@/components/VideoUpload";
 import PasswordGate from "@/components/PasswordGate";
@@ -50,10 +51,12 @@ const CATEGORIES = [
 const Admin = () => {
   const { toast } = useToast();
   const { posts, loading, refetch } = useBlogPosts(false);
+  const { comments, loading: commentsLoading, refetch: refetchComments } = useAllComments();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [activeTab, setActiveTab] = useState<"posts" | "comments">("posts");
 
   const [formData, setFormData] = useState({
     title: "",
@@ -178,6 +181,27 @@ const Admin = () => {
 
   const publishedCount = posts.filter(p => p.published).length;
   const draftCount = posts.filter(p => !p.published).length;
+  const pendingCommentsCount = comments.filter(c => !c.approved).length;
+
+  const handleApproveComment = async (commentId: string) => {
+    try {
+      await approveComment(commentId);
+      toast({ title: "Comment approved" });
+      refetchComments();
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    }
+  };
+
+  const handleRejectComment = async (commentId: string) => {
+    try {
+      await rejectComment(commentId);
+      toast({ title: "Comment rejected" });
+      refetchComments();
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    }
+  };
 
   return (
     <PasswordGate>
@@ -197,8 +221,8 @@ const Admin = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-          <div className="bg-card border border-border rounded-2xl p-6">
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8">
+          <div className="bg-card border border-border rounded-2xl p-6 cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setActiveTab("posts")}>
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">Total Posts</p>
@@ -231,16 +255,53 @@ const Admin = () => {
               </div>
             </div>
           </div>
+          <div className="bg-card border border-border rounded-2xl p-6 cursor-pointer hover:border-primary/50 transition-colors" onClick={() => setActiveTab("comments")}>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground mb-1">Pending Comments</p>
+                <p className="text-3xl font-bold text-orange-600">{pendingCommentsCount}</p>
+              </div>
+              <div className="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-full">
+                <MessageSquare className="w-6 h-6 text-orange-600" />
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* Action Bar */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-          <h2 className="text-xl font-semibold">All Posts</h2>
-          <Button onClick={openCreateDialog} className="rounded-full shadow-lg">
-            <Plus className="w-4 h-4 mr-2" />
-            New Post
+        {/* Tab Navigation */}
+        <div className="flex gap-2 mb-6">
+          <Button 
+            variant={activeTab === "posts" ? "default" : "outline"} 
+            onClick={() => setActiveTab("posts")}
+            className="rounded-full"
+          >
+            <FileText className="w-4 h-4 mr-2" />
+            Posts
+          </Button>
+          <Button 
+            variant={activeTab === "comments" ? "default" : "outline"} 
+            onClick={() => setActiveTab("comments")}
+            className="rounded-full"
+          >
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Comments
+            {pendingCommentsCount > 0 && (
+              <Badge className="ml-2 bg-orange-500 text-white">{pendingCommentsCount}</Badge>
+            )}
           </Button>
         </div>
+
+        {/* Posts Tab */}
+        {activeTab === "posts" && (
+          <>
+            {/* Action Bar */}
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+              <h2 className="text-xl font-semibold">All Posts</h2>
+              <Button onClick={openCreateDialog} className="rounded-full shadow-lg">
+                <Plus className="w-4 h-4 mr-2" />
+                New Post
+              </Button>
+            </div>
 
         {/* Posts Grid */}
         {loading ? (
@@ -359,6 +420,99 @@ const Admin = () => {
                 </div>
               </article>
             ))}
+          </div>
+        )}
+          </>
+        )}
+
+        {/* Comments Tab */}
+        {activeTab === "comments" && (
+          <div className="space-y-4">
+            <h2 className="text-xl font-semibold mb-6">Comment Moderation</h2>
+            
+            {commentsLoading ? (
+              <div className="flex justify-center items-center py-20">
+                <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+              </div>
+            ) : comments.length === 0 ? (
+              <div className="text-center py-20 bg-muted/50 rounded-3xl border-2 border-dashed border-border">
+                <MessageSquare className="w-16 h-16 mx-auto mb-4 text-muted-foreground/50" />
+                <p className="text-muted-foreground text-lg">No comments yet</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {comments.map((comment) => (
+                  <div 
+                    key={comment.id} 
+                    className={`bg-card border rounded-2xl p-6 transition-all ${
+                      comment.approved 
+                        ? 'border-green-200 dark:border-green-900' 
+                        : 'border-orange-200 dark:border-orange-900'
+                    }`}
+                  >
+                    <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-3">
+                          <Badge variant={comment.approved ? "default" : "secondary"} className={
+                            comment.approved 
+                              ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' 
+                              : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                          }>
+                            {comment.approved ? 'Approved' : 'Pending'}
+                          </Badge>
+                          <span className="text-sm text-muted-foreground">
+                            {new Date(comment.created_at).toLocaleString('en-IN')}
+                          </span>
+                        </div>
+                        
+                        <div className="mb-3">
+                          <p className="text-sm text-muted-foreground mb-1">On post:</p>
+                          <p className="font-medium">{comment.post_title}</p>
+                        </div>
+                        
+                        <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
+                          <span className="flex items-center gap-1">
+                            <User className="w-4 h-4" />
+                            {comment.author_name}
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <Mail className="w-4 h-4" />
+                            {comment.author_email}
+                          </span>
+                        </div>
+                        
+                        <div className="bg-muted/50 rounded-xl p-4">
+                          <p className="text-foreground">{comment.content}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex lg:flex-col gap-2">
+                        {!comment.approved && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="text-green-600 border-green-200 hover:bg-green-50 hover:text-green-700"
+                            onClick={() => handleApproveComment(comment.id)}
+                          >
+                            <Check className="w-4 h-4 mr-1" />
+                            Approve
+                          </Button>
+                        )}
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="text-destructive border-destructive/20 hover:bg-destructive/10"
+                          onClick={() => handleRejectComment(comment.id)}
+                        >
+                          <X className="w-4 h-4 mr-1" />
+                          {comment.approved ? 'Remove' : 'Reject'}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </main>
