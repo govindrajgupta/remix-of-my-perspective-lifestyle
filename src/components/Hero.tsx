@@ -58,14 +58,14 @@ const Hero = () => {
             </FadeIn>
             
             {/* Heading */}
-            <div className="space-y-4">
+            <div className="space-y-4 md:space-y-6">
               <FadeIn delay={0.2}>
-                <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight text-foreground">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] tracking-tight text-foreground">
                   <AnimatedWords text="A Pillar of" delay={0.3} />
-                  <span className="text-primary relative inline-block mx-2">
+                  <span className="text-primary relative inline-block mx-1 sm:mx-2">
                     <AnimatedWords text="Hope" delay={0.5} />
                     <motion.svg 
-                      className="absolute -bottom-2 left-0 w-full" 
+                      className="absolute -bottom-1 sm:-bottom-2 left-0 w-full" 
                       viewBox="0 0 100 8" 
                       preserveAspectRatio="none"
                       initial={{ pathLength: 0, opacity: 0 }}
@@ -88,7 +88,7 @@ const Hero = () => {
               </FadeIn>
               
               <FadeIn delay={0.4}>
-                <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0">
+                <p className="text-base sm:text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0">
                   Committed to legal assistance and alternative dispute resolution. 
                   We believe in dialogue over dispute, and hope through law.
                 </p>
@@ -126,7 +126,7 @@ const Hero = () => {
 
             {/* Stats */}
             <FadeIn delay={0.6}>
-              <StaggerContainer staggerDelay={0.15} initialDelay={0.7} className="grid grid-cols-3 gap-4 pt-8 border-t border-border/50">
+              <StaggerContainer staggerDelay={0.15} initialDelay={0.7} className="grid grid-cols-3 gap-2 sm:gap-4 pt-6 sm:pt-8 border-t border-border/50">
                 {stats.map((stat, index) => (
                   <StaggerItem key={index}>
                     <motion.div 
@@ -134,11 +134,11 @@ const Hero = () => {
                       whileHover={{ y: -3 }}
                       transition={{ type: "spring", stiffness: 300 }}
                     >
-                      <div className="flex items-center justify-center lg:justify-start gap-2 mb-1">
-                        <stat.icon className="w-4 h-4 text-accent transition-transform duration-300 group-hover:scale-110" />
-                        <span className="text-2xl md:text-3xl font-bold text-foreground transition-colors duration-300 group-hover:text-primary">{stat.value}</span>
+                      <div className="flex items-center justify-center lg:justify-start gap-1 sm:gap-2 mb-1">
+                        <stat.icon className="w-3 h-3 sm:w-4 sm:h-4 text-accent transition-transform duration-300 group-hover:scale-110" />
+                        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground transition-colors duration-300 group-hover:text-primary">{stat.value}</span>
                       </div>
-                      <p className="text-xs md:text-sm text-muted-foreground">{stat.label}</p>
+                      <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{stat.label}</p>
                     </motion.div>
                   </StaggerItem>
                 ))}
