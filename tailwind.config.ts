@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        serif: ['Merriweather', 'Georgia', 'serif'],
+        serif: ['Playfair Display', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -50,15 +50,6 @@ export default {
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
-        },
-        // NGO specific colors
-        saffron: {
-          DEFAULT: "hsl(30 85% 55%)",
-          light: "hsl(30 80% 95%)",
-        },
-        trust: {
-          DEFAULT: "hsl(215 65% 30%)",
-          light: "hsl(215 50% 95%)",
         },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
