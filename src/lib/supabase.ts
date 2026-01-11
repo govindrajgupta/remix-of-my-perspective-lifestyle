@@ -12,8 +12,21 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   featured_image: string | null;
+  video_url: string | null;
+  category: string;
+  views: number;
   author: string;
   published: boolean;
   created_at: string;
   updated_at: string;
+}
+
+export interface BlogComment {
+  id: string;
+  post_id: string;
+  author_name: string;
+  author_email: string;
+  content: string;
+  created_at: string;
+  approved: boolean;
 }
