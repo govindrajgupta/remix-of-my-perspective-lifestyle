@@ -1,22 +1,21 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import NavHeader from "@/components/NavHeader";
+import Footer from "@/components/Footer";
+import { Link } from "react-router-dom";
+import { Home } from "lucide-react";
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
-
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 animate-fade-in">
-      <div className="text-center animate-slide-up">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-gray-600">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 underline hover:text-blue-700">
-          Return to Home
-        </a>
-      </div>
+    <div className="min-h-screen bg-background flex flex-col">
+      <NavHeader />
+      <main className="flex-1 flex items-center justify-center">
+        <div className="text-center py-20">
+          <h1 className="font-serif text-6xl font-bold text-primary mb-4">404</h1>
+          <h2 className="font-serif text-2xl text-primary mb-4">Page Not Found</h2>
+          <p className="text-muted-foreground mb-8">The page you're looking for doesn't exist.</p>
+          <Link to="/" className="btn-primary inline-flex items-center gap-2"><Home className="w-4 h-4" />Back to Home</Link>
+        </div>
+      </main>
+      <Footer />
     </div>
   );
 };
