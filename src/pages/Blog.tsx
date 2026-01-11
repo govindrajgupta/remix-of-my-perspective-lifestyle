@@ -65,14 +65,14 @@ const Blog = () => {
                   <article className="relative overflow-hidden rounded-3xl bg-card border border-border transition-all duration-500 hover:shadow-2xl hover:border-primary/20">
                     <div className="grid grid-cols-1 lg:grid-cols-2">
                       {/* Image/Video Side */}
-                      <div className="relative h-72 lg:h-[500px] overflow-hidden bg-muted">
+                      <div className="relative min-h-72 lg:min-h-[400px] overflow-hidden bg-muted flex items-center justify-center">
                         {featuredPost.video_url ? (
                           <div className="absolute inset-0 flex items-center justify-center bg-black/20">
                             {featuredPost.featured_image && (
                               <img 
                                 src={featuredPost.featured_image} 
                                 alt={featuredPost.title}
-                                className="absolute inset-0 w-full h-full object-cover"
+                                className="w-full h-full object-contain"
                               />
                             )}
                             <div className="relative z-10 w-20 h-20 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -83,7 +83,7 @@ const Blog = () => {
                           <img 
                             src={featuredPost.featured_image} 
                             alt={featuredPost.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                            className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-muted-foreground">
@@ -148,7 +148,7 @@ const Blog = () => {
                         style={{ animationDelay: `${0.1 * (index + 1)}s` }}
                       >
                         {/* Image */}
-                        <div className="relative h-52 bg-muted overflow-hidden">
+                        <div className="relative h-52 bg-muted overflow-hidden flex items-center justify-center">
                           {post.video_url && (
                             <div className="absolute inset-0 z-10 flex items-center justify-center">
                               <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
@@ -160,7 +160,7 @@ const Blog = () => {
                             <img 
                               src={post.featured_image} 
                               alt={post.title}
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                             />
                           ) : (
                             <div className="w-full h-full flex items-center justify-center text-muted-foreground text-sm">

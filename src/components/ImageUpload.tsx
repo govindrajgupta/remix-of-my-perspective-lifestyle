@@ -3,7 +3,7 @@ import Cropper, { Area } from 'react-easy-crop';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { uploadBlogImage } from '@/lib/storage';
-import { X, Loader2, Image as ImageIcon, Crop, ZoomIn, ZoomOut } from 'lucide-react';
+import { X, Loader2, Image as ImageIcon, Crop, ZoomIn, ZoomOut, Upload } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@/components/ui/dialog';
 import { Slider } from '@/components/ui/slider';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
@@ -13,9 +13,10 @@ interface ImageUploadProps {
   onChange: (url: string) => void;
 }
 
-type AspectOption = 'landscape' | 'portrait' | 'square';
+type AspectOption = 'original' | 'landscape' | 'portrait' | 'square';
 
-const ASPECT_RATIOS: Record<AspectOption, { ratio: number; label: string; dimensions: string }> = {
+const ASPECT_RATIOS: Record<AspectOption, { ratio: number | null; label: string; dimensions: string }> = {
+  original: { ratio: null, label: 'Original', dimensions: 'No crop' },
   landscape: { ratio: 16 / 9, label: 'Landscape', dimensions: '16:9' },
   portrait: { ratio: 3 / 4, label: 'Portrait', dimensions: '3:4' },
   square: { ratio: 1, label: 'Square', dimensions: '1:1' },
@@ -87,10 +88,15 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const [aspectOption, setAspectOption] = useState<AspectOption>('landscape');
+  const [aspectOption, setAspectOption] = useState<AspectOption>('original');
+  const [imageNaturalAspect, setImageNaturalAspect] = useState<number>(16/9);
 
   const onCropComplete = useCallback((_croppedArea: Area, croppedAreaPixels: Area) => {
     setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const onMediaLoaded = useCallback((mediaSize: { width: number; height: number }) => {
+    setImageNaturalAspect(mediaSize.width / mediaSize.height);
   }, []);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,6 +124,7 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
     setShowCropper(true);
     setCrop({ x: 0, y: 0 });
     setZoom(1);
+    setAspectOption('original');
 
     // Reset input
     if (fileInputRef.current) {
@@ -125,8 +132,31 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
     }
   };
 
+  const handleUploadOriginal = async () => {
+    if (!originalFile) return;
+
+    setShowCropper(false);
+    setIsUploading(true);
+
+    try {
+      const url = await uploadBlogImage(originalFile);
+      onChange(url);
+    } catch (err: any) {
+      setError(err.message || 'Upload failed');
+    } finally {
+      setIsUploading(false);
+      cleanup();
+    }
+  };
+
   const handleCropConfirm = async () => {
     if (!imageToCrop || !croppedAreaPixels || !originalFile) return;
+
+    // If original is selected, upload without cropping
+    if (aspectOption === 'original') {
+      await handleUploadOriginal();
+      return;
+    }
 
     setShowCropper(false);
     setIsUploading(true);
@@ -143,22 +173,21 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
       setError(err.message || 'Crop/upload failed');
     } finally {
       setIsUploading(false);
-      // Cleanup
-      if (imageToCrop) {
-        URL.revokeObjectURL(imageToCrop);
-      }
-      setImageToCrop(null);
-      setOriginalFile(null);
+      cleanup();
     }
   };
 
-  const handleCropCancel = () => {
-    setShowCropper(false);
+  const cleanup = () => {
     if (imageToCrop) {
       URL.revokeObjectURL(imageToCrop);
     }
     setImageToCrop(null);
     setOriginalFile(null);
+  };
+
+  const handleCropCancel = () => {
+    setShowCropper(false);
+    cleanup();
   };
 
   const handleRemove = () => {
@@ -167,18 +196,19 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
   };
 
   const currentAspect = ASPECT_RATIOS[aspectOption];
+  const displayAspect = currentAspect.ratio ?? imageNaturalAspect;
 
   return (
     <div className="space-y-3">
       <label className="text-sm font-medium block">Featured Image</label>
 
-      {/* Preview */}
+      {/* Preview - show full image without cropping */}
       {value && (
-        <div className="relative rounded-xl overflow-hidden border border-border">
+        <div className="relative rounded-xl overflow-hidden border border-border bg-muted">
           <img
             src={value}
             alt="Featured preview"
-            className="w-full h-48 object-cover"
+            className="w-full max-h-80 object-contain bg-muted"
           />
           <Button
             type="button"
@@ -209,7 +239,7 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
                 <ImageIcon className="w-6 h-6 text-muted-foreground" />
               </div>
               <p className="text-sm font-medium">Click to upload image</p>
-              <p className="text-xs text-muted-foreground">PNG, JPG, WebP up to 10MB • Crop to fit</p>
+              <p className="text-xs text-muted-foreground">PNG, JPG, WebP up to 10MB</p>
             </div>
           )}
         </div>
@@ -244,7 +274,7 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Crop className="w-5 h-5" />
-              Crop Image
+              Adjust Image
             </DialogTitle>
           </DialogHeader>
 
@@ -256,7 +286,7 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
                 type="single"
                 value={aspectOption}
                 onValueChange={(val) => val && setAspectOption(val as AspectOption)}
-                className="justify-start"
+                className="justify-start flex-wrap"
               >
                 {(Object.keys(ASPECT_RATIOS) as AspectOption[]).map((key) => (
                   <ToggleGroupItem
@@ -273,50 +303,65 @@ const ImageUpload = ({ value, onChange }: ImageUploadProps) => {
               </ToggleGroup>
             </div>
 
-            {/* Cropper Area */}
+            {/* Cropper Area or Original Preview */}
             <div className="relative w-full h-80 bg-muted rounded-lg overflow-hidden">
-              {imageToCrop && (
+              {imageToCrop && aspectOption !== 'original' ? (
                 <Cropper
                   image={imageToCrop}
                   crop={crop}
                   zoom={zoom}
-                  aspect={currentAspect.ratio}
+                  aspect={displayAspect}
                   onCropChange={setCrop}
                   onCropComplete={onCropComplete}
                   onZoomChange={setZoom}
+                  onMediaLoaded={onMediaLoaded}
                   classes={{
                     containerClassName: 'rounded-lg',
                   }}
                 />
-              )}
+              ) : imageToCrop ? (
+                <div className="w-full h-full flex items-center justify-center p-4">
+                  <img 
+                    src={imageToCrop} 
+                    alt="Original preview" 
+                    className="max-w-full max-h-full object-contain rounded-lg"
+                  />
+                </div>
+              ) : null}
             </div>
 
-            {/* Zoom Control */}
-            <div className="flex items-center gap-4">
-              <ZoomOut className="w-4 h-4 text-muted-foreground" />
-              <Slider
-                value={[zoom]}
-                min={1}
-                max={3}
-                step={0.1}
-                onValueChange={(vals) => setZoom(vals[0])}
-                className="flex-1"
-              />
-              <ZoomIn className="w-4 h-4 text-muted-foreground" />
-            </div>
+            {/* Zoom Control - only show when cropping */}
+            {aspectOption !== 'original' && (
+              <div className="flex items-center gap-4">
+                <ZoomOut className="w-4 h-4 text-muted-foreground" />
+                <Slider
+                  value={[zoom]}
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  onValueChange={(vals) => setZoom(vals[0])}
+                  className="flex-1"
+                />
+                <ZoomIn className="w-4 h-4 text-muted-foreground" />
+              </div>
+            )}
 
             {/* Preview Label */}
             <p className="text-xs text-muted-foreground text-center">
-              Preview: {currentAspect.label} ({currentAspect.dimensions}) - Drag to reposition
+              {aspectOption === 'original' 
+                ? "Original image will be uploaded without cropping"
+                : `Cropping to ${currentAspect.label} (${currentAspect.dimensions}) - Drag to reposition`
+              }
             </p>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="flex-col sm:flex-row gap-2">
             <Button variant="outline" onClick={handleCropCancel}>
               Cancel
             </Button>
-            <Button onClick={handleCropConfirm} disabled={!croppedAreaPixels}>
-              Apply Crop & Upload
+            <Button onClick={handleCropConfirm}>
+              <Upload className="w-4 h-4 mr-2" />
+              {aspectOption === 'original' ? 'Upload Original' : 'Apply & Upload'}
             </Button>
           </DialogFooter>
         </DialogContent>
