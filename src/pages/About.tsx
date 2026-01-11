@@ -44,6 +44,8 @@ const About = () => {
                   <img 
                     src={logo} 
                     alt="Nyaya Alamban Logo" 
+                    loading="lazy"
+                    decoding="async"
                     className="w-full max-w-[250px] mx-auto"
                   />
                 </motion.div>

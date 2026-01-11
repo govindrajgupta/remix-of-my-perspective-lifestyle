@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Users, Scale, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { FadeIn, StaggerContainer, StaggerItem, AnimatedWords } from "@/components/ui/animated-text";
+import { CountUp } from "@/components/ui/text-animations";
 
 const Hero = () => {
   const stats = [
-    { icon: Shield, value: "10+", label: "Years of Service" },
-    { icon: Users, value: "5000+", label: "Cases Resolved" },
-    { icon: Scale, value: "100%", label: "Commitment" },
+    { icon: Shield, value: 10, suffix: "+", label: "Years of Service" },
+    { icon: Users, value: 5000, suffix: "+", label: "Cases Resolved" },
+    { icon: Scale, value: 100, suffix: "%", label: "Commitment" },
   ];
 
   return (
@@ -136,7 +137,9 @@ const Hero = () => {
                     >
                       <div className="flex items-center justify-center lg:justify-start gap-1 sm:gap-2 mb-1">
                         <stat.icon className="w-3 h-3 sm:w-4 sm:h-4 text-accent transition-transform duration-300 group-hover:scale-110" />
-                        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground transition-colors duration-300 group-hover:text-primary">{stat.value}</span>
+                        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground transition-colors duration-300 group-hover:text-primary">
+                          <CountUp end={stat.value} suffix={stat.suffix} delay={800 + index * 200} duration={1500} />
+                        </span>
                       </div>
                       <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{stat.label}</p>
                     </motion.div>
@@ -170,6 +173,9 @@ const Hero = () => {
                 <img
                   src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=1920&q=80"
                   alt="Justice and legal aid"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
                   className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
                 />
                 {/* Overlay gradient */}

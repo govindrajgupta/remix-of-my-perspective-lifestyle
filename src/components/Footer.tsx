@@ -38,6 +38,8 @@ const Footer = () => {
               <img 
                 src={logo} 
                 alt="Nyaya Alamban" 
+                loading="lazy"
+                decoding="async"
                 className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto transition-all duration-500 group-hover:scale-105" 
               />
               <div className="border-l-2 border-primary-foreground/20 pl-3 sm:pl-5">

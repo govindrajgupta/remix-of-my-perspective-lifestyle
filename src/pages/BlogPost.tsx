@@ -168,6 +168,8 @@ const BlogPost = () => {
               <img 
                 src={post.featured_image} 
                 alt={post.title}
+                loading="lazy"
+                decoding="async"
                 className="max-w-full h-auto object-contain rounded-lg"
                 style={{ maxHeight: '70vh' }}
               />
