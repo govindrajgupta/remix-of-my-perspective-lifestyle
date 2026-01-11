@@ -6,7 +6,7 @@
    Deep Blue + Saffron accent color scheme
    Trustworthy, calm, and authoritative design */
 
-@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+/* Font is now preloaded in index.html for better performance */
 
 @layer base {
   :root {

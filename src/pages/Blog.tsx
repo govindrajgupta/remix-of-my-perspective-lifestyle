@@ -72,6 +72,8 @@ const Blog = () => {
                               <img 
                                 src={featuredPost.featured_image} 
                                 alt={featuredPost.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="w-full h-full object-contain"
                               />
                             )}
@@ -86,6 +88,8 @@ const Blog = () => {
                             <img 
                               src={featuredPost.featured_image} 
                               alt={featuredPost.title}
+                              loading="lazy"
+                              decoding="async"
                               className="max-w-full max-h-[400px] w-auto h-auto object-contain group-hover:scale-105 transition-transform duration-700"
                             />
                           </div>
@@ -165,6 +169,8 @@ const Blog = () => {
                               <img 
                                 src={post.featured_image} 
                                 alt={post.title}
+                                loading="lazy"
+                                decoding="async"
                                 className="max-w-full max-h-52 w-auto h-auto object-contain group-hover:scale-105 transition-transform duration-500"
                               />
                             </div>
