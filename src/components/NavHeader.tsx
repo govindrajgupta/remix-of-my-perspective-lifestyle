@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronRight, BookOpen } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/nyaya-alamban-logo-transparent.png";
 
@@ -73,14 +73,6 @@ const NavHeader = () => {
                 {link.name}
               </Link>
             ))}
-            <Link
-              to="/about"
-              className="ml-3 px-6 py-2.5 rounded-lg bg-gradient-to-r from-accent to-saffron-light text-accent-foreground font-semibold text-sm tracking-wide transition-all duration-300 hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 animate-fade-in"
-              style={{ animationDelay: '200ms' }}
-            >
-              <BookOpen className="w-4 h-4" />
-              Learn About Our Work
-            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -113,15 +105,6 @@ const NavHeader = () => {
                   <ChevronRight size={16} className="opacity-40" />
                 </Link>
               ))}
-              <Link
-                to="/about"
-                onClick={() => setIsMenuOpen(false)}
-                className="mt-3 px-4 py-3.5 rounded-lg bg-gradient-to-r from-accent to-saffron-light text-accent-foreground font-semibold text-center tracking-wide transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 animate-slide-in-left"
-                style={{ animationDelay: '300ms' }}
-              >
-                <BookOpen className="w-4 h-4" />
-                Learn About Our Work
-              </Link>
             </div>
           </div>
         )}
