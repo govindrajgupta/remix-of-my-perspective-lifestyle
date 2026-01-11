@@ -32,7 +32,7 @@ const Footer = () => {
           <div className="lg:col-span-2 space-y-6">
             <Link to="/" className="flex items-center gap-4">
               <div className="bg-primary-foreground rounded-xl p-2">
-                <img src={logo} alt="Nyaya Alamban" className="h-12 w-auto" />
+                <img src={logo} alt="Nyaya Alamban" className="h-16 w-auto" />
               </div>
               <div>
                 <span className="text-xl font-bold font-serif block">Nyaya Alamban</span>
