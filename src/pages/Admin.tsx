@@ -7,7 +7,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { useBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "@/hooks/useBlogPosts";
 import { BlogPost } from "@/lib/supabase";
-import { Plus, Edit, Trash2, Eye, EyeOff, Loader2, X } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, EyeOff, Loader2 } from "lucide-react";
+import ImageUpload from "@/components/ImageUpload";
 import {
   Dialog,
   DialogContent,
@@ -278,14 +279,10 @@ const Admin = () => {
                 placeholder="Full blog post content"
               />
             </div>
-            <div>
-              <label className="text-sm font-medium mb-2 block">Featured Image URL</label>
-              <Input
-                value={formData.featured_image}
-                onChange={(e) => setFormData({ ...formData, featured_image: e.target.value })}
-                placeholder="https://example.com/image.jpg"
-              />
-            </div>
+            <ImageUpload
+              value={formData.featured_image}
+              onChange={(url) => setFormData({ ...formData, featured_image: url })}
+            />
             <div>
               <label className="text-sm font-medium mb-2 block">Author</label>
               <Input
