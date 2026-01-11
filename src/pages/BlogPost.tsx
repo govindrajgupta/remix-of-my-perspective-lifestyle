@@ -1,13 +1,58 @@
 import NavHeader from "@/components/NavHeader";
 import Footer from "@/components/Footer";
 import { useParams, Link } from "react-router-dom";
-import { Calendar, User, ArrowLeft, Loader2 } from "lucide-react";
+import { Calendar, User, ArrowLeft, Loader2, Eye, Share2, Clock, Tag } from "lucide-react";
 import { useBlogPost } from "@/hooks/useBlogPosts";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import CommentSection from "@/components/CommentSection";
+import { useToast } from "@/hooks/use-toast";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
   const { post, loading, error } = useBlogPost(id || '');
+  const { toast } = useToast();
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('en-IN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  };
+
+  const estimateReadTime = (content: string) => {
+    const wordsPerMinute = 200;
+    const words = content.split(/\s+/).length;
+    return Math.ceil(words / wordsPerMinute);
+  };
+
+  const handleShare = async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: post?.title,
+          text: post?.excerpt,
+          url,
+        });
+      } catch (err) {
+        // User cancelled
+      }
+    } else {
+      await navigator.clipboard.writeText(url);
+      toast({ title: "Link copied to clipboard!" });
+    }
+  };
+
+  const isYouTubeUrl = (url: string) => {
+    return url.includes('youtube.com') || url.includes('youtu.be');
+  };
+
+  const getYouTubeEmbedUrl = (url: string) => {
+    const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)?.[1];
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  };
 
   if (loading) {
     return (
@@ -50,51 +95,129 @@ const BlogPost = () => {
         {/* Back Link */}
         <Link 
           to="/blog"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-8 group"
         >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Blog
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Back to Journal
         </Link>
+
+        {/* Article Header */}
+        <header className="mb-10 animate-fade-in">
+          {/* Category Badge */}
+          <div className="flex items-center gap-3 mb-6">
+            <Badge variant="outline" className="px-3 py-1">
+              <Tag className="w-3 h-3 mr-1.5" />
+              {post.category || 'General'}
+            </Badge>
+            {post.views > 0 && (
+              <span className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                <Eye className="w-4 h-4" />
+                {post.views} views
+              </span>
+            )}
+          </div>
+
+          {/* Title */}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight tracking-tight">
+            {post.title}
+          </h1>
+
+          {/* Excerpt */}
+          <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+            {post.excerpt}
+          </p>
+
+          {/* Meta Bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 py-6 border-y border-border">
+            <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                  <User className="w-5 h-5 text-primary" />
+                </div>
+                <div>
+                  <p className="font-medium text-foreground">{post.author}</p>
+                  <p className="text-xs">Author</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Calendar className="w-5 h-5" />
+                <span>{formatDate(post.created_at)}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Clock className="w-5 h-5" />
+                <span>{estimateReadTime(post.content)} min read</span>
+              </div>
+            </div>
+            
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="rounded-full"
+              onClick={handleShare}
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              Share
+            </Button>
+          </div>
+        </header>
 
         {/* Featured Image */}
         {post.featured_image && (
-          <div className="rounded-[2rem] overflow-hidden mb-8">
-            <img 
-              src={post.featured_image} 
-              alt={post.title}
-              className="w-full h-64 md:h-96 object-cover"
-            />
-          </div>
+          <figure className="mb-10 animate-scale-in">
+            <div className="rounded-2xl overflow-hidden border border-border">
+              <img 
+                src={post.featured_image} 
+                alt={post.title}
+                className="w-full h-auto max-h-[500px] object-cover"
+              />
+            </div>
+          </figure>
         )}
 
-        {/* Title */}
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 animate-slide-down">
-          {post.title}
-        </h1>
-
-        {/* Meta */}
-        <div className="flex items-center gap-6 text-muted-foreground mb-8 pb-8 border-b border-border">
-          <span className="flex items-center gap-2">
-            <Calendar className="w-5 h-5" />
-            {new Date(post.created_at).toLocaleDateString('en-IN', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
-          </span>
-          <span className="flex items-center gap-2">
-            <User className="w-5 h-5" />
-            {post.author}
-          </span>
-        </div>
+        {/* Featured Video */}
+        {post.video_url && (
+          <figure className="mb-10 animate-scale-in">
+            <div className="rounded-2xl overflow-hidden border border-border bg-black">
+              {isYouTubeUrl(post.video_url) ? (
+                <iframe
+                  src={getYouTubeEmbedUrl(post.video_url) || ''}
+                  className="w-full aspect-video"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              ) : (
+                <video 
+                  src={post.video_url} 
+                  controls
+                  className="w-full aspect-video"
+                />
+              )}
+            </div>
+          </figure>
+        )}
 
         {/* Content */}
-        <article className="prose prose-lg max-w-none">
+        <article className="prose prose-lg max-w-none animate-fade-in">
           <div 
-            className="text-foreground leading-relaxed whitespace-pre-wrap"
-            dangerouslySetInnerHTML={{ __html: post.content.replace(/\n/g, '<br />') }}
-          />
+            className="text-foreground leading-relaxed text-lg whitespace-pre-wrap"
+            style={{ lineHeight: '1.8' }}
+          >
+            {post.content.split('\n').map((paragraph, index) => (
+              paragraph.trim() ? (
+                <p key={index} className="mb-6">{paragraph}</p>
+              ) : null
+            ))}
+          </div>
         </article>
+
+        {/* Tags/Category Footer */}
+        <div className="mt-12 pt-8 border-t border-border flex items-center gap-3">
+          <span className="text-sm text-muted-foreground">Filed under:</span>
+          <Badge variant="secondary">{post.category || 'General'}</Badge>
+        </div>
+
+        {/* Comments Section */}
+        <CommentSection postId={post.id} />
       </main>
       
       <Footer />
