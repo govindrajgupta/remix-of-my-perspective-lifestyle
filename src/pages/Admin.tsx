@@ -9,6 +9,7 @@ import { useBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "@/
 import { BlogPost } from "@/lib/supabase";
 import { Plus, Edit, Trash2, Eye, EyeOff, Loader2 } from "lucide-react";
 import ImageUpload from "@/components/ImageUpload";
+import PasswordGate from "@/components/PasswordGate";
 import {
   Dialog,
   DialogContent,
@@ -145,6 +146,7 @@ const Admin = () => {
   };
 
   return (
+    <PasswordGate>
     <div className="min-h-screen bg-background">
       <NavHeader />
       
@@ -337,6 +339,7 @@ const Admin = () => {
       
       <Footer />
     </div>
+    </PasswordGate>
   );
 };
 
