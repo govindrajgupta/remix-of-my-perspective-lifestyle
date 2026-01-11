@@ -70,7 +70,7 @@ export const useBlogPost = (id: string) => {
 
 // Admin functions
 export const createBlogPost = async (post: Omit<BlogPost, 'id' | 'created_at' | 'updated_at'>) => {
-  const removableColumns = ['video_url', 'category'] as const;
+  const removableColumns = ['video_url', 'category', 'views'] as const;
   let payload: Record<string, any> = { ...post };
 
   for (let attempt = 0; attempt <= removableColumns.length; attempt++) {
@@ -100,7 +100,7 @@ export const createBlogPost = async (post: Omit<BlogPost, 'id' | 'created_at' | 
 };
 
 export const updateBlogPost = async (id: string, updates: Partial<BlogPost>) => {
-  const removableColumns = ['video_url', 'category'] as const;
+  const removableColumns = ['video_url', 'category', 'views'] as const;
   let payload: Record<string, any> = { ...updates, updated_at: new Date().toISOString() };
 
   for (let attempt = 0; attempt <= removableColumns.length; attempt++) {

@@ -14,7 +14,7 @@ export interface BlogPost {
   featured_image: string | null;
   video_url?: string | null;
   category?: string;
-  views: number;
+  views?: number;
   author: string;
   published: boolean;
   created_at: string;
