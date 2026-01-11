@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, ReactNode } from 'react';
+import { motion, useInView } from 'framer-motion';
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -14,73 +15,39 @@ const ScrollReveal = ({
   className = '', 
   delay = 0,
   direction = 'up',
-  duration = 800,
+  duration = 0.7,
   threshold = 0.1
 }: ScrollRevealProps) => {
-  const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
-      },
-      { 
-        threshold,
-        rootMargin: '0px 0px -50px 0px'
-      }
-    );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
+  const getVariants = () => {
+    const directions = {
+      up: { initial: { opacity: 0, y: 50 }, animate: { opacity: 1, y: 0 } },
+      down: { initial: { opacity: 0, y: -50 }, animate: { opacity: 1, y: 0 } },
+      left: { initial: { opacity: 0, x: -50 }, animate: { opacity: 1, x: 0 } },
+      right: { initial: { opacity: 0, x: 50 }, animate: { opacity: 1, x: 0 } },
+      scale: { initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 } },
     };
-  }, [threshold]);
-
-  const getInitialStyles = () => {
-    switch (direction) {
-      case 'down':
-        return { opacity: 0, transform: 'translateY(-40px)' };
-      case 'left':
-        return { opacity: 0, transform: 'translateX(-50px)' };
-      case 'right':
-        return { opacity: 0, transform: 'translateX(50px)' };
-      case 'scale':
-        return { opacity: 0, transform: 'scale(0.9)' };
-      case 'up':
-      default:
-        return { opacity: 0, transform: 'translateY(40px)' };
-    }
+    return directions[direction];
   };
 
-  const getVisibleStyles = () => {
-    return { 
-      opacity: 1, 
-      transform: 'translateY(0) translateX(0) scale(1)',
-      filter: 'blur(0)'
-    };
-  };
+  const variants = getVariants();
 
   return (
-    <div
+    <motion.div
       ref={ref}
-      className={className}
-      style={{
-        ...(isVisible ? getVisibleStyles() : { ...getInitialStyles(), filter: 'blur(8px)' }),
-        transition: `all ${duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${delay}ms`,
-        willChange: 'opacity, transform, filter',
+      initial={variants.initial}
+      animate={isInView ? variants.animate : variants.initial}
+      transition={{
+        duration,
+        delay,
+        ease: [0.16, 1, 0.3, 1],
       }}
+      className={className}
     >
       {children}
-    </div>
+    </motion.div>
   );
 };
 
