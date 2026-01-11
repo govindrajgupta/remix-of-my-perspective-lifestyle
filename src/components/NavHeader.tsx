@@ -5,14 +5,12 @@ import {
   NavItems,
   MobileNav,
   NavbarLogo,
-  NavbarButton,
   MobileNavHeader,
   MobileNavToggle,
   MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Phone } from "lucide-react";
 
 const NavHeader = () => {
   const navItems = [
@@ -33,12 +31,6 @@ const NavHeader = () => {
       <NavBody>
         <NavbarLogo />
         <NavItems items={navItems} />
-        <div className="flex items-center gap-2">
-          <NavbarButton href="/contact" variant="accent">
-            <Phone className="w-4 h-4" />
-            Get Free Consultation
-          </NavbarButton>
-        </div>
       </NavBody>
 
       {/* Mobile Navigation */}
@@ -55,7 +47,7 @@ const NavHeader = () => {
           isOpen={isMobileMenuOpen}
           onClose={() => setIsMobileMenuOpen(false)}
         >
-          {navItems.map((item, idx) => (
+            {navItems.map((item, idx) => (
             <Link
               key={`mobile-link-${idx}`}
               to={item.link}
@@ -69,17 +61,6 @@ const NavHeader = () => {
               {item.name}
             </Link>
           ))}
-          <div className="flex w-full flex-col gap-3 pt-4 border-t border-border mt-2">
-            <NavbarButton
-              href="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              variant="accent"
-              className="w-full"
-            >
-              <Phone className="w-4 h-4" />
-              Get Free Consultation
-            </NavbarButton>
-          </div>
         </MobileNavMenu>
       </MobileNav>
     </Navbar>
