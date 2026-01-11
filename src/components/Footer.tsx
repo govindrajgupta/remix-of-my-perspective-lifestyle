@@ -30,13 +30,11 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
           {/* Brand */}
           <div className="lg:col-span-2 space-y-6">
-            <Link to="/" className="flex items-center gap-4">
-              <div className="bg-primary-foreground rounded-xl p-2">
-                <img src={logo} alt="Nyaya Alamban" className="h-16 w-auto" />
-              </div>
+            <Link to="/" className="flex items-center gap-4 mb-6">
+              <img src={logo} alt="Nyaya Alamban" className="h-24 w-auto" />
               <div>
-                <span className="text-xl font-bold font-serif block">Nyaya Alamban</span>
-                <span className="text-xs font-medium text-primary-foreground/70 tracking-widest uppercase">
+                <span className="text-2xl font-bold font-serif block">Nyaya Alamban</span>
+                <span className="text-sm font-medium text-primary-foreground/70 tracking-widest uppercase">
                   In Law We Trust
                 </span>
               </div>
