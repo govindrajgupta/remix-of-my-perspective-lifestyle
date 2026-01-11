@@ -1,22 +1,11 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Lock, Loader2 } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
-// Simple hash function for basic protection
-const simpleHash = async (str: string): Promise<string> => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(str);
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-};
-
-// Set your admin password here (hashed for basic protection)
-// To generate a new hash, run in browser console:
-// crypto.subtle.digest('SHA-256', new TextEncoder().encode('yourpassword')).then(buf => console.log(Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('')))
-const ADMIN_PASSWORD_HASH = 'a9fc615de6ba1f6adb195ab19f0d07ed5c0f0e67a2dc0ae5e34a5aaad7a8c1db'; // Password: "govindrajgupta"
+// Admin password - change this to your desired password
+const ADMIN_PASSWORD = 'govindrajgupta';
 
 interface PasswordGateProps {
   children: React.ReactNode;
@@ -25,51 +14,38 @@ interface PasswordGateProps {
 const PasswordGate = ({ children }: PasswordGateProps) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
   const { toast } = useToast();
 
   // Check if already authenticated in this session
   useEffect(() => {
     const authToken = sessionStorage.getItem('admin_auth');
-    if (authToken === ADMIN_PASSWORD_HASH) {
+    if (authToken === 'authenticated') {
       setIsAuthenticated(true);
     }
     setIsChecking(false);
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    try {
-      const hashedPassword = await simpleHash(password);
-      
-      if (hashedPassword === ADMIN_PASSWORD_HASH) {
-        sessionStorage.setItem('admin_auth', ADMIN_PASSWORD_HASH);
-        setIsAuthenticated(true);
-        toast({ title: 'Access granted' });
-      } else {
-        toast({ 
-          title: 'Incorrect password', 
-          variant: 'destructive' 
-        });
-        setPassword('');
-      }
-    } catch (error) {
+    if (password === ADMIN_PASSWORD) {
+      sessionStorage.setItem('admin_auth', 'authenticated');
+      setIsAuthenticated(true);
+      toast({ title: 'Access granted' });
+    } else {
       toast({ 
-        title: 'Authentication error', 
+        title: 'Incorrect password', 
         variant: 'destructive' 
       });
-    } finally {
-      setIsLoading(false);
+      setPassword('');
     }
   };
 
   if (isChecking) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
-        <Loader2 className="w-8 h-8 animate-spin text-muted-foreground" />
+        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -106,9 +82,8 @@ const PasswordGate = ({ children }: PasswordGateProps) => {
             <Button 
               type="submit" 
               className="w-full rounded-full"
-              disabled={isLoading || !password}
+              disabled={!password}
             >
-              {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
               Unlock
             </Button>
           </form>
