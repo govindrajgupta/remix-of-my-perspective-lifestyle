@@ -1,4 +1,4 @@
-import { MessageCircle, Scale, Heart } from "lucide-react";
+import { MessageCircle, Scale, Heart, Sparkles } from "lucide-react";
 import ScrollReveal from './ScrollReveal';
 
 const Philosophy = () => {
@@ -7,58 +7,66 @@ const Philosophy = () => {
       icon: MessageCircle,
       title: "No Dispute, But Dialogue",
       description: "We promote mutual discussion and understanding as the first step toward resolution, avoiding unnecessary court battles.",
-      color: "bg-primary/10 text-primary"
+      gradient: "from-primary/20 to-primary/5"
     },
     {
       icon: Scale,
       title: "Fairness & Balance",
       description: "Every case is approached with impartiality, ensuring both parties are heard and treated with equal respect.",
-      color: "bg-accent/10 text-accent"
+      gradient: "from-accent/20 to-accent/5"
     },
     {
       icon: Heart,
       title: "Peaceful Resolution",
       description: "Our goal is to achieve harmony and closure, restoring relationships and community bonds wherever possible.",
-      color: "bg-primary/10 text-primary"
+      gradient: "from-primary/20 to-primary/5"
     }
   ];
 
   return (
-    <section className="py-16 md:py-24">
-      <div className="container-wide">
-        <ScrollReveal className="text-center mb-12 md:mb-16">
-          <span className="inline-block px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-4">
+    <section className="py-20 md:py-28 relative overflow-hidden">
+      {/* Background decorations */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
+      
+      <div className="container-wide relative">
+        <ScrollReveal className="text-center mb-16 md:mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium mb-6">
+            <Sparkles className="w-4 h-4" />
             Our Values
-          </span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">
+          </div>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-foreground">
             Our Philosophy
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
             We believe in resolving disputes through dialogue, not litigation.
           </p>
         </ScrollReveal>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {philosophyItems.map((item, index) => (
-            <ScrollReveal key={index} delay={index * 100}>
+            <ScrollReveal key={index} delay={index * 150} direction="up">
               <div className="group relative h-full">
                 {/* Card */}
-                <div className="relative bg-card rounded-2xl p-8 border border-border/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-2 hover:border-border h-full">
+                <div className={`relative bg-gradient-to-br ${item.gradient} rounded-3xl p-8 md:p-10 border border-border/50 transition-all duration-500 hover:shadow-2xl hover:-translate-y-3 h-full overflow-hidden`}>
+                  {/* Animated background on hover */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
                   {/* Icon */}
-                  <div className={`w-16 h-16 rounded-2xl ${item.color} flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110`}>
-                    <item.icon className="w-8 h-8" />
+                  <div className="relative w-16 h-16 rounded-2xl bg-card shadow-lg flex items-center justify-center mb-6 transition-all duration-500 group-hover:scale-110 group-hover:shadow-xl group-hover:rotate-3">
+                    <item.icon className="w-8 h-8 text-accent transition-colors duration-300" />
                   </div>
                   
                   {/* Content */}
-                  <h3 className="text-xl font-bold mb-4 text-foreground">
+                  <h3 className="relative text-xl md:text-2xl font-bold mb-4 text-foreground transition-colors duration-300 group-hover:text-primary">
                     {item.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="relative text-muted-foreground leading-relaxed text-base">
                     {item.description}
                   </p>
                   
-                  {/* Decorative line */}
-                  <div className="absolute bottom-0 left-8 right-8 h-1 bg-gradient-to-r from-primary/0 via-accent to-primary/0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  {/* Decorative corner */}
+                  <div className="absolute bottom-0 right-0 w-24 h-24 bg-accent/10 rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
               </div>
             </ScrollReveal>

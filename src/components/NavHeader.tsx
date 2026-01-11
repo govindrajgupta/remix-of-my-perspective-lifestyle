@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ChevronRight } from "lucide-react";
+import { Menu, X, ChevronRight, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import logo from "@/assets/nyaya-alamban-logo-transparent.png";
 
@@ -29,7 +29,7 @@ const NavHeader = () => {
     <header 
       className={`sticky top-0 z-50 transition-all duration-500 ease-out ${
         isScrolled 
-          ? "bg-background/98 backdrop-blur-md shadow-[0_2px_20px_-4px_rgba(0,0,0,0.1)] border-b border-border/20" 
+          ? "bg-background/95 backdrop-blur-xl shadow-[0_4px_30px_-4px_rgba(0,0,0,0.1)] border-b border-border/30" 
           : "bg-background shadow-none border-b border-transparent"
       }`}
     >
@@ -59,13 +59,14 @@ const NavHeader = () => {
 
           {/* Desktop Navigation with refined styling */}
           <div className="hidden md:flex items-center gap-2">
-            {navLinks.map((link) => (
+            {navLinks.map((link, index) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-5 py-2.5 rounded-lg font-medium text-sm tracking-wide transition-all duration-200 ${
+                style={{ animationDelay: `${index * 50}ms` }}
+                className={`px-5 py-2.5 rounded-lg font-medium text-sm tracking-wide transition-all duration-300 animate-fade-in ${
                   isActive(link.path)
-                    ? "bg-primary text-primary-foreground shadow-sm"
+                    ? "bg-primary text-primary-foreground shadow-md"
                     : "text-muted-foreground hover:text-foreground hover:bg-muted/80"
                 }`}
               >
@@ -73,10 +74,12 @@ const NavHeader = () => {
               </Link>
             ))}
             <Link
-              to="/contact"
-              className="ml-3 px-6 py-2.5 rounded-lg bg-accent text-accent-foreground font-semibold text-sm tracking-wide transition-all duration-200 hover:bg-accent/90 hover:shadow-md"
+              to="/about"
+              className="ml-3 px-6 py-2.5 rounded-lg bg-gradient-to-r from-accent to-saffron-light text-accent-foreground font-semibold text-sm tracking-wide transition-all duration-300 hover:shadow-lg hover:scale-[1.02] flex items-center gap-2 animate-fade-in"
+              style={{ animationDelay: '200ms' }}
             >
-              Get Help
+              <BookOpen className="w-4 h-4" />
+              Learn About Our Work
             </Link>
           </div>
 
@@ -92,14 +95,15 @@ const NavHeader = () => {
 
         {/* Mobile Navigation with refined styling */}
         {isMenuOpen && (
-          <div className="md:hidden py-5 border-t border-border/50 animate-fade-in">
+          <div className="md:hidden py-5 border-t border-border/50 animate-slide-down">
             <div className="flex flex-col gap-1.5">
-              {navLinks.map((link) => (
+              {navLinks.map((link, index) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
-                  className={`flex items-center justify-between px-4 py-3.5 rounded-lg font-medium tracking-wide transition-all duration-200 ${
+                  style={{ animationDelay: `${index * 75}ms` }}
+                  className={`flex items-center justify-between px-4 py-3.5 rounded-lg font-medium tracking-wide transition-all duration-300 animate-slide-in-left ${
                     isActive(link.path)
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground hover:bg-muted/80"
@@ -110,11 +114,13 @@ const NavHeader = () => {
                 </Link>
               ))}
               <Link
-                to="/contact"
+                to="/about"
                 onClick={() => setIsMenuOpen(false)}
-                className="mt-3 px-4 py-3.5 rounded-lg bg-accent text-accent-foreground font-semibold text-center tracking-wide transition-all duration-200 hover:bg-accent/90"
+                className="mt-3 px-4 py-3.5 rounded-lg bg-gradient-to-r from-accent to-saffron-light text-accent-foreground font-semibold text-center tracking-wide transition-all duration-300 hover:shadow-lg flex items-center justify-center gap-2 animate-slide-in-left"
+                style={{ animationDelay: '300ms' }}
               >
-                Get Help Today
+                <BookOpen className="w-4 h-4" />
+                Learn About Our Work
               </Link>
             </div>
           </div>
