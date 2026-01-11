@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin, ArrowUpRight } from "lucide-react";
-import logo from "@/assets/nyaya-alamban-logo.png";
+import logo from "@/assets/nyaya-alamban-logo-transparent.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
