@@ -1,11 +1,12 @@
 import NavHeader from "@/components/NavHeader";
 import Footer from "@/components/Footer";
-import { Calendar, User, ArrowRight, Loader2, Play, Eye, TrendingUp, BookOpen } from "lucide-react";
+import { Calendar, User, ArrowRight, Loader2, Play, Eye, TrendingUp, BookOpen, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 import { Badge } from "@/components/ui/badge";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 // Helper to check if URL is a YouTube link
 const isYouTubeUrl = (url: string) => {
@@ -93,9 +94,12 @@ const MediaCard = ({ post, size = 'regular' }: { post: any; size?: 'featured' | 
   );
 };
 
+const POSTS_PER_PAGE = 7; // 1 featured + 6 regular posts
+
 const Blog = () => {
   const { posts, loading, error } = useBlogPosts(true);
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Extract unique categories from posts
   const categories = useMemo(() => {
@@ -110,8 +114,25 @@ const Blog = () => {
     return posts.filter(post => (post.category || 'General') === selectedCategory);
   }, [posts, selectedCategory]);
 
-  const featuredPost = filteredPosts[0];
-  const regularPosts = filteredPosts.slice(1);
+  // Pagination logic
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const paginatedPosts = filteredPosts.slice(startIndex, endIndex);
+
+  const featuredPost = paginatedPosts[0];
+  const regularPosts = paginatedPosts.slice(1);
+
+  // Reset to page 1 when category changes
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-IN', {
@@ -148,7 +169,7 @@ const Blog = () => {
               {categories.map((category) => (
                 <motion.button
                   key={category}
-                  onClick={() => setSelectedCategory(category)}
+                  onClick={() => handleCategoryChange(category)}
                   className={`px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
                     selectedCategory === category
                       ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/25'
@@ -302,6 +323,66 @@ const Blog = () => {
                         </Link>
                       </motion.div>
                     ))}
+                  </div>
+                )}
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <div className="mt-16 flex justify-center items-center gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage - 1)}
+                      disabled={currentPage === 1}
+                      className="gap-1"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                      Previous
+                    </Button>
+
+                    <div className="flex items-center gap-1 mx-2">
+                      {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
+                        // Show first, last, current, and neighbors
+                        const showPage = page === 1 || 
+                                         page === totalPages || 
+                                         Math.abs(page - currentPage) <= 1;
+                        const showEllipsis = (page === 2 && currentPage > 3) || 
+                                            (page === totalPages - 1 && currentPage < totalPages - 2);
+
+                        if (!showPage && !showEllipsis) return null;
+
+                        if (showEllipsis && !showPage) {
+                          return (
+                            <span key={`ellipsis-${page}`} className="px-2 text-muted-foreground">
+                              ...
+                            </span>
+                          );
+                        }
+
+                        return (
+                          <Button
+                            key={page}
+                            variant={currentPage === page ? "default" : "ghost"}
+                            size="sm"
+                            onClick={() => handlePageChange(page)}
+                            className="w-9 h-9 p-0"
+                          >
+                            {page}
+                          </Button>
+                        );
+                      })}
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handlePageChange(currentPage + 1)}
+                      disabled={currentPage === totalPages}
+                      className="gap-1"
+                    >
+                      Next
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
                   </div>
                 )}
               </motion.div>
