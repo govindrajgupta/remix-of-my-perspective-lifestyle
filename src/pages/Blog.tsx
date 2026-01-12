@@ -1,9 +1,100 @@
 import NavHeader from "@/components/NavHeader";
 import Footer from "@/components/Footer";
-import { Calendar, User, ArrowRight, Loader2, Play, Eye, TrendingUp } from "lucide-react";
+import { Calendar, User, ArrowRight, Loader2, Play, Eye, TrendingUp, BookOpen } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useBlogPosts } from "@/hooks/useBlogPosts";
 import { Badge } from "@/components/ui/badge";
+import { useState } from "react";
+
+// Helper to check if URL is a YouTube link
+const isYouTubeUrl = (url: string) => {
+  return url?.includes('youtube.com') || url?.includes('youtu.be');
+};
+
+// Get YouTube thumbnail from URL
+const getYouTubeThumbnail = (url: string) => {
+  if (!url) return null;
+  let videoId = '';
+  if (url.includes('youtube.com/watch')) {
+    videoId = new URL(url).searchParams.get('v') || '';
+  } else if (url.includes('youtu.be/')) {
+    videoId = url.split('youtu.be/')[1]?.split('?')[0] || '';
+  } else if (url.includes('youtube.com/embed/')) {
+    videoId = url.split('embed/')[1]?.split('?')[0] || '';
+  }
+  return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
+};
+
+// Media Card Component for proper image/video display
+const MediaCard = ({ post, size = 'regular' }: { post: any; size?: 'featured' | 'regular' }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const hasVideo = post.video_url && post.video_url.trim() !== '';
+  const isYouTube = hasVideo && isYouTubeUrl(post.video_url);
+  
+  const getThumbnail = () => {
+    if (post.featured_image) return post.featured_image;
+    if (isYouTube) return getYouTubeThumbnail(post.video_url);
+    return null;
+  };
+
+  const thumbnail = getThumbnail();
+  const containerClass = size === 'featured' 
+    ? "relative min-h-64 lg:min-h-80 overflow-hidden bg-muted"
+    : "relative bg-muted overflow-hidden min-h-52";
+
+  return (
+    <div 
+      className={containerClass}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Video Preview on Hover */}
+      {hasVideo && !isYouTube && isHovered ? (
+        <video
+          src={post.video_url}
+          className="w-full h-full object-cover"
+          muted
+          autoPlay
+          loop
+          playsInline
+        />
+      ) : thumbnail ? (
+        <img 
+          src={thumbnail} 
+          alt={post.title}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/10 to-accent/10">
+          <BookOpen className="w-12 h-12 text-muted-foreground/30" />
+        </div>
+      )}
+
+      {/* Video Indicator Badge */}
+      {hasVideo && (
+        <div className="absolute bottom-4 right-4 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/90 backdrop-blur-sm text-xs font-medium z-10">
+          <Play className="w-3 h-3 fill-current" />
+          Video
+        </div>
+      )}
+      
+      {/* Category Badge */}
+      <Badge 
+        className={size === 'featured' 
+          ? "absolute top-6 left-6 bg-primary text-primary-foreground"
+          : "absolute top-4 left-4 bg-background/90 backdrop-blur-sm text-foreground"
+        }
+      >
+        {post.category || (size === 'featured' ? 'Featured' : 'General')}
+      </Badge>
+
+      {/* Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+    </div>
+  );
+};
 
 const Blog = () => {
   const { posts, loading, error } = useBlogPosts(true);
@@ -64,46 +155,8 @@ const Blog = () => {
                 >
                   <article className="relative overflow-hidden rounded-3xl bg-card border border-border transition-all duration-500 hover:shadow-2xl hover:border-primary/20">
                     <div className="grid grid-cols-1 lg:grid-cols-2">
-                      {/* Image/Video Side */}
-                      <div className="relative min-h-64 lg:min-h-80 overflow-hidden bg-muted">
-                        {featuredPost.video_url ? (
-                          <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                            {featuredPost.featured_image && (
-                              <img 
-                                src={featuredPost.featured_image} 
-                                alt={featuredPost.title}
-                                loading="lazy"
-                                decoding="async"
-                                className="w-full h-full object-contain"
-                              />
-                            )}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <div className="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                <Play className="w-8 h-8 text-primary ml-1" />
-                              </div>
-                            </div>
-                          </div>
-                        ) : featuredPost.featured_image ? (
-                          <div className="w-full h-full flex items-center justify-center p-4">
-                            <img 
-                              src={featuredPost.featured_image} 
-                              alt={featuredPost.title}
-                              loading="lazy"
-                              decoding="async"
-                              className="max-w-full max-h-[400px] w-auto h-auto object-contain group-hover:scale-105 transition-transform duration-700"
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-full h-full min-h-64 flex items-center justify-center text-muted-foreground">
-                            Featured Image
-                          </div>
-                        )}
-                        
-                        {/* Category Badge */}
-                        <Badge className="absolute top-6 left-6 bg-primary text-primary-foreground">
-                          {featuredPost.category || 'Featured'}
-                        </Badge>
-                      </div>
+                      {/* Media Side */}
+                      <MediaCard post={featuredPost} size="featured" />
 
                       {/* Content Side */}
                       <div className="p-8 lg:p-12 flex flex-col justify-center">
@@ -155,39 +208,8 @@ const Blog = () => {
                         className="h-full bg-card border border-border rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 hover:border-primary/20 animate-fade-in"
                         style={{ animationDelay: `${0.1 * (index + 1)}s` }}
                       >
-                        {/* Image */}
-                        <div className="relative bg-muted overflow-hidden">
-                          {post.video_url && (
-                            <div className="absolute inset-0 z-10 flex items-center justify-center">
-                              <div className="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                                <Play className="w-6 h-6 text-primary ml-0.5" />
-                              </div>
-                            </div>
-                          )}
-                          {post.featured_image ? (
-                            <div className="w-full flex items-center justify-center p-3 min-h-48">
-                              <img 
-                                src={post.featured_image} 
-                                alt={post.title}
-                                loading="lazy"
-                                decoding="async"
-                                className="max-w-full max-h-52 w-auto h-auto object-contain group-hover:scale-105 transition-transform duration-500"
-                              />
-                            </div>
-                          ) : (
-                            <div className="w-full h-48 flex items-center justify-center text-muted-foreground text-sm">
-                              No Image
-                            </div>
-                          )}
-                          
-                          {/* Category */}
-                          <Badge 
-                            variant="secondary" 
-                            className="absolute top-4 left-4 bg-background/90 backdrop-blur-sm"
-                          >
-                            {post.category || 'General'}
-                          </Badge>
-                        </div>
+                        {/* Media Card */}
+                        <MediaCard post={post} size="regular" />
                         
                         {/* Content */}
                         <div className="p-6">
