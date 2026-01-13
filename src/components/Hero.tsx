@@ -1,17 +1,10 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Shield, Users, Scale, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-import { FadeIn, StaggerContainer, StaggerItem, AnimatedWords } from "@/components/ui/animated-text";
-import { CountUp } from "@/components/ui/text-animations";
+import { FadeIn, AnimatedWords } from "@/components/ui/animated-text";
 
 const Hero = () => {
-  const stats = [
-    { icon: Shield, value: 10, suffix: "+", label: "Years of Service" },
-    { icon: Users, value: 5000, suffix: "+", label: "Cases Resolved" },
-    { icon: Scale, value: 100, suffix: "%", label: "Commitment" },
-  ];
-
   return (
     <section className="relative overflow-hidden">
       {/* Animated background elements */}
@@ -125,28 +118,6 @@ const Hero = () => {
               </div>
             </FadeIn>
 
-            {/* Stats */}
-            <FadeIn delay={0.6}>
-              <StaggerContainer staggerDelay={0.15} initialDelay={0.7} className="grid grid-cols-3 gap-2 sm:gap-4 pt-6 sm:pt-8 border-t border-border/50">
-                {stats.map((stat, index) => (
-                  <StaggerItem key={index}>
-                    <motion.div 
-                      className="text-center lg:text-left group cursor-default"
-                      whileHover={{ y: -3 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      <div className="flex items-center justify-center lg:justify-start gap-1 sm:gap-2 mb-1">
-                        <stat.icon className="w-3 h-3 sm:w-4 sm:h-4 text-accent transition-transform duration-300 group-hover:scale-110" />
-                        <span className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground transition-colors duration-300 group-hover:text-primary">
-                          <CountUp end={stat.value} suffix={stat.suffix} delay={800 + index * 200} duration={1500} />
-                        </span>
-                      </div>
-                      <p className="text-[10px] sm:text-xs md:text-sm text-muted-foreground">{stat.label}</p>
-                    </motion.div>
-                  </StaggerItem>
-                ))}
-              </StaggerContainer>
-            </FadeIn>
           </div>
 
           {/* Right - Image */}
