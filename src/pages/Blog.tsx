@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
-
+import SEO from "@/components/SEO";
 // Helper to check if URL is a YouTube link
 const isYouTubeUrl = (url: string) => {
   return url?.includes('youtube.com') || url?.includes('youtu.be');
@@ -144,6 +144,12 @@ const Blog = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Blog - Legal Insights & Updates"
+        url="/blog"
+        description="Stay informed about legal rights, justice initiatives, and updates from Nyaya Alamban. Read our latest articles on legal aid and alternative dispute resolution."
+        keywords="legal blog, legal rights India, justice news, ADR articles, legal aid updates, Nyaya Alamban blog"
+      />
       <NavHeader />
       
       <main className="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

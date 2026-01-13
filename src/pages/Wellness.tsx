@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import ArticleCard from "@/components/ArticleCard";
 import { articles } from "@/data/articles";
+import SEO from "@/components/SEO";
 
 const Wellness = () => {
   const wellnessArticles = articles.filter(article => 
@@ -9,6 +10,12 @@ const Wellness = () => {
 
   return (
     <div className="min-h-screen bg-background animate-fade-in">
+      <SEO 
+        title="Wellness & Self-Care"
+        url="/wellness"
+        description="Discover practices, insights, and strategies to nurture your physical, mental, and emotional wellbeing. Explore ways to create balance and vitality in your daily life."
+        keywords="wellness, self-care, mental health, holistic health, wellbeing, mindfulness, legal wellness"
+      />
       <Header />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

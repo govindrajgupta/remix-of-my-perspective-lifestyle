@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import CommentSection from "@/components/CommentSection";
 import { useToast } from "@/hooks/use-toast";
+import SEO from "@/components/SEO";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -89,6 +90,16 @@ const BlogPost = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title={post.title}
+        url={`/blog/${post.id}`}
+        description={post.excerpt || `Read ${post.title} on Nyaya Alamban's blog.`}
+        image={post.featured_image}
+        type="article"
+        author={post.author}
+        publishedTime={post.created_at}
+        keywords={`${post.category || 'legal'}, ${post.title}, Nyaya Alamban blog`}
+      />
       <NavHeader />
       
       <main className="pt-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

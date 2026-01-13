@@ -1,8 +1,16 @@
 import Header from "@/components/Header";
+import SEO from "@/components/SEO";
 
 const Privacy = () => {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
+      <SEO 
+        title="Privacy Policy"
+        url="/privacy"
+        description="Learn how Nyaya Alamban collects, uses, and protects your personal information. Read our privacy policy for details on data security and your rights."
+        keywords="privacy policy, data protection, personal information, Nyaya Alamban privacy"
+        noindex={true}
+      />
       <Header />
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
