@@ -41,7 +41,7 @@ const Hero = () => {
         }}
       />
       
-      <div className="container-wide relative py-12 md:py-20 lg:py-28">
+      <div className="container-wide relative pt-4 pb-12 md:pt-8 md:pb-20 lg:pt-12 lg:pb-28">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Left - Content */}
           <div className="space-y-8 text-center lg:text-left">
