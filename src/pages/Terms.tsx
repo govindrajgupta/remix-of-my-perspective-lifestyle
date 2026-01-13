@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
 const Terms = () => {
@@ -8,7 +9,7 @@ const Terms = () => {
         title="Terms of Service"
         url="/terms"
         description="Read the Terms of Service for using Nyaya Alamban's website and services. Understand your rights and obligations when accessing our legal aid resources."
-        keywords="terms of service, terms and conditions, user agreement, Nyaya Alamban terms"
+        keywords="terms of service, terms and conditions, user agreement, Nyaya Alamban terms, legal aid terms"
         noindex={true}
       />
       <Header />
@@ -20,7 +21,7 @@ const Terms = () => {
             Terms of Service
           </h1>
           <p className="text-muted-foreground animate-slide-up stagger-1">
-            Last updated: March 20, 2025
+            Last updated: January 13, 2026
           </p>
         </div>
 
@@ -28,99 +29,138 @@ const Terms = () => {
           <section>
             <h2 className="text-2xl font-bold mb-4">Agreement to Terms</h2>
             <p className="text-muted-foreground">
-              By accessing or using Perspective's website and services, you agree to be bound by these Terms of Service. 
-              If you disagree with any part of these terms, you may not access our services.
+              By accessing or using Nyaya Alamban's website and services, you agree to be bound by these 
+              Terms of Service. If you disagree with any part of these terms, you may not access our services. 
+              These terms apply to all visitors, users, and others who access or use our website and legal aid services.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Use License</h2>
+            <h2 className="text-2xl font-bold mb-4">Our Services</h2>
             <p className="text-muted-foreground mb-4">
-              Permission is granted to temporarily access the materials on Perspective's website for personal, 
-              non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:
+              Nyaya Alamban is a non-governmental organization dedicated to providing free legal aid and 
+              support to marginalized communities. Our services include:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-              <li>Modify or copy the materials</li>
-              <li>Use the materials for any commercial purpose or public display</li>
-              <li>Attempt to decompile or reverse engineer any software on our website</li>
-              <li>Remove any copyright or proprietary notations from the materials</li>
-              <li>Transfer the materials to another person or mirror on any other server</li>
+              <li>Free legal consultation and advice</li>
+              <li>Legal representation for eligible individuals</li>
+              <li>Legal awareness and education programs</li>
+              <li>Community outreach and empowerment initiatives</li>
+              <li>Referrals to appropriate legal resources and authorities</li>
+            </ul>
+            <p className="text-muted-foreground mt-4">
+              Eligibility for our free legal services is determined based on financial need and the nature 
+              of the legal matter. We reserve the right to decline representation at our discretion.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold mb-4">No Attorney-Client Relationship</h2>
+            <p className="text-muted-foreground">
+              Merely accessing our website or contacting us does not create an attorney-client relationship. 
+              Such a relationship is only established when we have formally agreed to represent you in a 
+              legal matter and you have signed an engagement letter or agreement with us.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold mb-4">User Responsibilities</h2>
+            <p className="text-muted-foreground mb-4">
+              When using our services, you agree to:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
+              <li>Provide accurate and truthful information about your case and circumstances</li>
+              <li>Respond promptly to requests for information or documentation</li>
+              <li>Attend scheduled appointments and court dates</li>
+              <li>Treat our staff and volunteers with respect and dignity</li>
+              <li>Not use our services for fraudulent or illegal purposes</li>
+              <li>Keep confidential any information shared with you during the course of representation</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">User Content</h2>
-            <p className="text-muted-foreground">
-              When you post comments or other content on our website, you grant us a non-exclusive, worldwide, 
-              royalty-free license to use, reproduce, and display such content. You represent that you own or 
-              have the necessary rights to the content you post.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold mb-4">Prohibited Uses</h2>
+            <h2 className="text-2xl font-bold mb-4">Website Use</h2>
             <p className="text-muted-foreground mb-4">
-              You may not use our website:
+              You may use our website for lawful purposes only. You agree not to:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-              <li>In any way that violates any applicable law or regulation</li>
-              <li>To transmit any harmful or malicious code</li>
-              <li>To impersonate or attempt to impersonate Perspective or any employee</li>
-              <li>To harass, abuse, or harm another person</li>
-              <li>To spam or send unsolicited communications</li>
+              <li>Violate any applicable laws or regulations</li>
+              <li>Transmit harmful code, viruses, or malware</li>
+              <li>Attempt to gain unauthorized access to our systems</li>
+              <li>Interfere with the proper functioning of the website</li>
+              <li>Collect or harvest user information without consent</li>
+              <li>Use the website for commercial solicitation</li>
             </ul>
           </section>
 
           <section>
             <h2 className="text-2xl font-bold mb-4">Intellectual Property</h2>
             <p className="text-muted-foreground">
-              All content on Perspective, including articles, images, logos, and designs, is the property of 
-              Perspective or its content creators and is protected by international copyright laws. 
-              Unauthorized use of our content may violate copyright, trademark, and other laws.
+              All content on the Nyaya Alamban website, including text, graphics, logos, images, and 
+              educational materials, is the property of Nyaya Alamban or its content creators and is 
+              protected by copyright laws. You may use our educational materials for personal, 
+              non-commercial purposes with proper attribution. Any other use requires our prior written consent.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Disclaimer</h2>
+            <h2 className="text-2xl font-bold mb-4">Disclaimer of Legal Information</h2>
             <p className="text-muted-foreground">
-              The materials on Perspective's website are provided on an "as is" basis. Perspective makes no 
-              warranties, expressed or implied, and hereby disclaims and negates all other warranties including, 
-              without limitation, implied warranties or conditions of merchantability, fitness for a particular 
-              purpose, or non-infringement of intellectual property.
+              The information provided on our website is for general informational purposes only and does 
+              not constitute legal advice. Legal situations are fact-specific, and the information on 
+              our website may not apply to your particular circumstances. Always consult with a qualified 
+              legal professional for advice regarding your specific legal issues.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Limitations of Liability</h2>
+            <h2 className="text-2xl font-bold mb-4">Limitation of Liability</h2>
             <p className="text-muted-foreground">
-              In no event shall Perspective or its suppliers be liable for any damages (including, without 
-              limitation, damages for loss of data or profit, or due to business interruption) arising out of 
-              the use or inability to use the materials on Perspective's website.
+              Nyaya Alamban provides services on a pro bono basis and to the best of our abilities. 
+              We shall not be liable for any indirect, incidental, special, or consequential damages 
+              arising out of or in connection with our services. Our liability is limited to the extent 
+              permitted by applicable law.
             </p>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Links to Other Websites</h2>
+            <h2 className="text-2xl font-bold mb-4">Termination of Services</h2>
             <p className="text-muted-foreground">
-              Our website may contain links to third-party websites that are not owned or controlled by Perspective. 
-              We have no control over and assume no responsibility for the content, privacy policies, or practices 
-              of any third-party websites.
+              We reserve the right to terminate our representation or services at any time if:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 text-muted-foreground mt-4">
+              <li>You provide false or misleading information</li>
+              <li>You fail to cooperate with our legal team</li>
+              <li>There is a conflict of interest</li>
+              <li>Continuing representation would be unethical or unlawful</li>
+              <li>You engage in abusive or threatening behavior towards our staff</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold mb-4">Donations</h2>
+            <p className="text-muted-foreground">
+              Donations to Nyaya Alamban are voluntary and non-refundable. All donations are used to 
+              support our mission of providing free legal aid to those in need. Tax receipts will be 
+              issued in accordance with applicable laws and regulations.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-bold mb-4">Modifications</h2>
             <p className="text-muted-foreground">
-              Perspective may revise these Terms of Service at any time without notice. By using this website, 
-              you are agreeing to be bound by the current version of these Terms of Service.
+              Nyaya Alamban may revise these Terms of Service at any time without prior notice. 
+              By continuing to use our website after any changes, you agree to be bound by the 
+              revised terms. Please review these terms periodically for updates.
             </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-bold mb-4">Governing Law</h2>
             <p className="text-muted-foreground">
-              These terms shall be governed by and construed in accordance with the laws of the State of California, 
-              without regard to its conflict of law provisions.
+              These terms shall be governed by and construed in accordance with the laws of India. 
+              Any disputes arising from these terms or our services shall be subject to the exclusive 
+              jurisdiction of the courts in New Delhi, India.
             </p>
           </section>
 
@@ -130,12 +170,16 @@ const Terms = () => {
               If you have any questions about these Terms of Service, please contact us at:
             </p>
             <p className="text-muted-foreground mt-4">
-              Email: legal@perspective.blog<br />
-              Address: San Francisco, CA
+              <strong>Nyaya Alamban</strong><br />
+              Email: legal@nyayaalamban.org<br />
+              Phone: +91 98765 43210<br />
+              Address: New Delhi, India
             </p>
           </section>
         </div>
       </main>
+      
+      <Footer />
     </div>
   );
 };
