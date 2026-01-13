@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
 const Privacy = () => {
@@ -8,7 +9,7 @@ const Privacy = () => {
         title="Privacy Policy"
         url="/privacy"
         description="Learn how Nyaya Alamban collects, uses, and protects your personal information. Read our privacy policy for details on data security and your rights."
-        keywords="privacy policy, data protection, personal information, Nyaya Alamban privacy"
+        keywords="privacy policy, data protection, personal information, Nyaya Alamban privacy, legal aid privacy"
         noindex={true}
       />
       <Header />
@@ -20,7 +21,7 @@ const Privacy = () => {
             Privacy Policy
           </h1>
           <p className="text-muted-foreground animate-slide-up stagger-1">
-            Last updated: March 20, 2025
+            Last updated: January 13, 2026
           </p>
         </div>
 
@@ -28,8 +29,10 @@ const Privacy = () => {
           <section>
             <h2 className="text-2xl font-bold mb-4">Introduction</h2>
             <p className="text-muted-foreground">
-              At Perspective, we take your privacy seriously. This Privacy Policy explains how we collect, 
-              use, disclose, and safeguard your information when you visit our website and subscribe to our newsletter.
+              Nyaya Alamban ("we," "our," or "us") is committed to protecting your privacy and ensuring 
+              the confidentiality of your personal information. This Privacy Policy explains how we collect, 
+              use, disclose, and safeguard your information when you visit our website, use our legal aid 
+              services, or engage with our organization.
             </p>
           </section>
 
@@ -40,13 +43,23 @@ const Privacy = () => {
               We may collect personal information that you voluntarily provide to us when you:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-              <li>Subscribe to our newsletter</li>
-              <li>Contact us through our contact form</li>
-              <li>Comment on our articles</li>
-              <li>Create an account on our website</li>
+              <li>Request legal aid or consultation services</li>
+              <li>Fill out intake forms or case assessment questionnaires</li>
+              <li>Contact us through our website, phone, or in person</li>
+              <li>Subscribe to our newsletter or updates</li>
+              <li>Participate in our community outreach programs</li>
+              <li>Make donations to support our mission</li>
             </ul>
             <p className="text-muted-foreground mt-4">
-              This information may include your name, email address, and any other information you choose to provide.
+              This information may include your name, email address, phone number, address, and any 
+              case-related details you choose to share with us.
+            </p>
+
+            <h3 className="text-xl font-semibold mb-3 mt-6">Sensitive Legal Information</h3>
+            <p className="text-muted-foreground">
+              Given the nature of our legal aid services, we may collect sensitive information related 
+              to your legal matters. This information is treated with the highest level of confidentiality 
+              and is protected under attorney-client privilege where applicable.
             </p>
 
             <h3 className="text-xl font-semibold mb-3 mt-6">Automatically Collected Information</h3>
@@ -63,21 +76,22 @@ const Privacy = () => {
               We use the information we collect to:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-              <li>Send you our newsletter and marketing communications</li>
-              <li>Respond to your comments and questions</li>
-              <li>Improve our website and content</li>
-              <li>Analyze usage patterns and trends</li>
-              <li>Protect against fraudulent or illegal activity</li>
+              <li>Provide legal aid services and case representation</li>
+              <li>Assess eligibility for our free legal assistance programs</li>
+              <li>Communicate with you about your case or inquiry</li>
+              <li>Send you updates about our programs and services</li>
+              <li>Process donations and issue tax receipts</li>
+              <li>Improve our website and service delivery</li>
+              <li>Comply with legal and regulatory requirements</li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Cookies and Tracking Technologies</h2>
+            <h2 className="text-2xl font-bold mb-4">Attorney-Client Privilege</h2>
             <p className="text-muted-foreground">
-              We use cookies and similar tracking technologies to track activity on our website and store 
-              certain information. You can instruct your browser to refuse all cookies or to indicate when 
-              a cookie is being sent. However, if you do not accept cookies, you may not be able to use 
-              some portions of our website.
+              All communications between you and our legal team regarding legal advice are protected 
+              by attorney-client privilege. We will not disclose any privileged information without 
+              your express written consent, except as required by law or court order.
             </p>
           </section>
 
@@ -85,7 +99,8 @@ const Privacy = () => {
             <h2 className="text-2xl font-bold mb-4">Data Security</h2>
             <p className="text-muted-foreground">
               We implement appropriate technical and organizational security measures to protect your 
-              personal information. However, please note that no method of transmission over the Internet 
+              personal information. This includes encrypted storage, secure access controls, and regular 
+              security audits. However, please note that no method of transmission over the Internet 
               or method of electronic storage is 100% secure.
             </p>
           </section>
@@ -93,30 +108,35 @@ const Privacy = () => {
           <section>
             <h2 className="text-2xl font-bold mb-4">Your Rights</h2>
             <p className="text-muted-foreground mb-4">
-              Depending on your location, you may have certain rights regarding your personal information, including:
+              You have the following rights regarding your personal information:
             </p>
             <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
               <li>The right to access your personal information</li>
               <li>The right to rectification of inaccurate information</li>
-              <li>The right to erasure of your personal information</li>
+              <li>The right to erasure of your personal information (subject to legal retention requirements)</li>
               <li>The right to withdraw consent</li>
-              <li>The right to data portability</li>
+              <li>The right to receive copies of your case files</li>
+              <li>The right to lodge a complaint with a supervisory authority</li>
             </ul>
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-bold mb-4">Data Retention</h2>
+            <p className="text-muted-foreground">
+              We retain your personal information for as long as necessary to fulfill the purposes 
+              outlined in this policy, unless a longer retention period is required by law. Legal 
+              case files are retained in accordance with bar association guidelines and applicable 
+              legal requirements.
+            </p>
           </section>
 
           <section>
             <h2 className="text-2xl font-bold mb-4">Third-Party Services</h2>
             <p className="text-muted-foreground">
-              Our website may contain links to third-party websites. We are not responsible for the privacy 
-              practices of these third-party sites. We encourage you to read their privacy policies.
-            </p>
-          </section>
-
-          <section>
-            <h2 className="text-2xl font-bold mb-4">Children's Privacy</h2>
-            <p className="text-muted-foreground">
-              Our website is not intended for children under the age of 13. We do not knowingly collect 
-              personal information from children under 13.
+              We may share your information with trusted third parties who assist us in operating our 
+              organization, such as case management software providers, communication platforms, and 
+              payment processors. These parties are bound by confidentiality agreements and are 
+              prohibited from using your information for any other purpose.
             </p>
           </section>
 
@@ -131,15 +151,20 @@ const Privacy = () => {
           <section>
             <h2 className="text-2xl font-bold mb-4">Contact Us</h2>
             <p className="text-muted-foreground">
-              If you have any questions about this Privacy Policy, please contact us at:
+              If you have any questions about this Privacy Policy or wish to exercise your rights, 
+              please contact us at:
             </p>
             <p className="text-muted-foreground mt-4">
-              Email: privacy@perspective.blog<br />
-              Address: San Francisco, CA
+              <strong>Nyaya Alamban</strong><br />
+              Email: privacy@nyayaalamban.org<br />
+              Phone: +91 98765 43210<br />
+              Address: New Delhi, India
             </p>
           </section>
         </div>
       </main>
+      
+      <Footer />
     </div>
   );
 };
