@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/animated-text";
 import ScrollReveal from "@/components/ScrollReveal";
+import SEO from "@/components/SEO";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -36,6 +37,12 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="Contact Us"
+        url="/contact"
+        description="Contact Nyaya Alamban for free legal assistance, consultation, or queries about our services. Reach out via email, phone, or our contact form."
+        keywords="contact Nyaya Alamban, legal help contact, free legal consultation, legal aid contact India"
+      />
       <NavHeader />
       
       <main className="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

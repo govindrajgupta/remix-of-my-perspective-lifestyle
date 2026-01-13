@@ -5,10 +5,17 @@ import logo from "@/assets/nyaya-alamban-logo.png";
 import { motion } from "framer-motion";
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/animated-text";
 import ScrollReveal from "@/components/ScrollReveal";
+import SEO from "@/components/SEO";
 
 const About = () => {
   return (
     <div className="min-h-screen bg-background">
+      <SEO 
+        title="About Us"
+        url="/about"
+        description="Learn about Nyaya Alamban, founded by Social Worker Mr. Raghavenddhiraa. We provide legal assistance and promote alternative dispute resolution. Nyaya means Justice, Alamban means Hope."
+        keywords="about Nyaya Alamban, Mr. Raghavenddhiraa, legal aid NGO, alternative dispute resolution, justice India, social worker"
+      />
       <NavHeader />
       
       <main className="pt-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

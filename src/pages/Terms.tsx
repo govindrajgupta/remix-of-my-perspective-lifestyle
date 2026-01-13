@@ -1,8 +1,16 @@
 import Header from "@/components/Header";
+import SEO from "@/components/SEO";
 
 const Terms = () => {
   return (
     <div className="min-h-screen bg-background animate-fade-in">
+      <SEO 
+        title="Terms of Service"
+        url="/terms"
+        description="Read the Terms of Service for using Nyaya Alamban's website and services. Understand your rights and obligations when accessing our legal aid resources."
+        keywords="terms of service, terms and conditions, user agreement, Nyaya Alamban terms"
+        noindex={true}
+      />
       <Header />
       
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
