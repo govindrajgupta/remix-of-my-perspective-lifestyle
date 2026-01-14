@@ -28,9 +28,11 @@ const Approach = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 text-foreground">
             Our Approach
           </h2>
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-2 mb-4">
+            We believe in engaging with the cross section of the society for achieving our goals. For this we will encompass Judges, Advocates, Doctors, Social Workers, Bureaucrats, students and anyone felt appropriate who can handle and develop methodologies for resolving disputes at their nascent stage without court involvement, focusing on consensus and mutuality.
+          </p>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto px-2">
-            We collaborate with diverse professionals to provide comprehensive 
-            legal assistance and resolve disputes before they reach the courts.
+            We shall in constant touch with Judiciary especially legal service Authorities try to reduce the pendency and arrears in the court system by facilitating amicable settlements and trustworthy mechanisms agreed by parties. Also with the help of legal service Authorities and Advocates on our panel we shall take steps for aiding undertrial prisoners by giving them legal assistance wherever it's required.
           </p>
         </ScrollReveal>
         
