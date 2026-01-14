@@ -1,44 +1,18 @@
 import NavHeader from "@/components/NavHeader";
 import Footer from "@/components/Footer";
-import { Mail, Send } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/hooks/use-toast";
+import { Mail } from "lucide-react";
 import { motion } from "framer-motion";
-import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/animated-text";
+import { FadeIn } from "@/components/ui/animated-text";
 import ScrollReveal from "@/components/ScrollReveal";
 import SEO from "@/components/SEO";
 
 const Contact = () => {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    toast({ title: "Message Sent", description: "Thank you for contacting us." });
-    setFormData({ name: "", email: "", subject: "", message: "" });
-    setIsSubmitting(false);
-  };
-
-  const contactInfo = [
-    { icon: Mail, title: "Email", value: "info@nyaya-alamban.org", href: "mailto:info@nyaya-alamban.org" },
-  ];
-
   return (
     <div className="min-h-screen bg-background">
       <SEO 
         title="Contact Us"
         url="/contact"
-        description="Contact Nyaya Alamban for free legal assistance, consultation, or queries about our services. Reach out via email, phone, or our contact form."
+        description="Contact Nyaya Alamban for free legal assistance, consultation, or queries about our services. Reach out via email."
         keywords="contact Nyaya Alamban, legal help contact, free legal consultation, legal aid contact India"
       />
       <NavHeader />
@@ -62,104 +36,45 @@ const Contact = () => {
         <section className="py-12 md:py-16">
           <ScrollReveal>
             <motion.div 
-              className="bg-muted rounded-[2.5rem] p-8 md:p-12 lg:p-16"
+              className="bg-muted rounded-[2.5rem] p-8 md:p-12 lg:p-16 max-w-2xl mx-auto text-center"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                {/* Form */}
-                <motion.div
-                  initial={{ opacity: 0, x: -30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 }}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                className="space-y-6"
+              >
+                <motion.div 
+                  className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto"
+                  whileHover={{ scale: 1.1, rotate: 10 }}
                 >
-                  <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
-                  <form onSubmit={handleSubmit} className="space-y-4">
-                    <motion.div whileFocus={{ scale: 1.02 }}>
-                      <Input 
-                        name="name" 
-                        value={formData.name} 
-                        onChange={handleChange} 
-                        required 
-                        placeholder="Your Name"
-                        className="rounded-xl bg-background border-0 transition-all duration-300 focus:ring-2 focus:ring-primary/20"
-                      />
-                    </motion.div>
-                    <Input 
-                      name="email" 
-                      type="email" 
-                      value={formData.email} 
-                      onChange={handleChange} 
-                      required 
-                      placeholder="Email Address"
-                      className="rounded-xl bg-background border-0 transition-all duration-300 focus:ring-2 focus:ring-primary/20"
-                    />
-                    <Input 
-                      name="subject" 
-                      value={formData.subject} 
-                      onChange={handleChange} 
-                      placeholder="Subject"
-                      className="rounded-xl bg-background border-0 transition-all duration-300 focus:ring-2 focus:ring-primary/20"
-                    />
-                    <Textarea 
-                      name="message" 
-                      value={formData.message} 
-                      onChange={handleChange} 
-                      required 
-                      rows={5} 
-                      placeholder="Your Message"
-                      className="rounded-xl bg-background border-0 resize-none transition-all duration-300 focus:ring-2 focus:ring-primary/20"
-                    />
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button 
-                        type="submit" 
-                        disabled={isSubmitting}
-                        className="rounded-full px-8 py-6 transition-all"
-                      >
-                        <Send className="w-4 h-4 mr-2" />
-                        {isSubmitting ? "Sending..." : "Send Message"}
-                      </Button>
-                    </motion.div>
-                  </form>
+                  <Mail className="w-10 h-10 text-primary" />
                 </motion.div>
-
-                {/* Contact Info */}
-                <motion.div
-                  initial={{ opacity: 0, x: 30 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.3 }}
+                
+                <div>
+                  <h2 className="text-2xl font-bold mb-2">Send us your queries</h2>
+                  <p className="text-muted-foreground mb-6">
+                    For legal assistance or any questions, please email us at:
+                  </p>
+                </div>
+                
+                <motion.a 
+                  href="mailto:info@nyaya-alamban.org"
+                  className="inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 rounded-full text-lg font-medium transition-all duration-300 hover:shadow-lg hover:scale-105"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
                 >
-                  <h2 className="text-2xl font-bold mb-6">Get in Touch</h2>
-                  <StaggerContainer staggerDelay={0.1} className="space-y-6">
-                    {contactInfo.map((item, index) => (
-                      <StaggerItem key={index}>
-                        <a 
-                          href={item.href}
-                          className="block"
-                        >
-                          <motion.div 
-                            className="flex items-start gap-4"
-                            whileHover={{ x: 5 }}
-                            transition={{ type: "spring", stiffness: 300 }}
-                          >
-                            <motion.div 
-                              className="w-12 h-12 rounded-full bg-background flex items-center justify-center flex-shrink-0"
-                              whileHover={{ scale: 1.1, rotate: 10 }}
-                            >
-                              <item.icon className="w-5 h-5" />
-                            </motion.div>
-                            <div>
-                              <h4 className="font-semibold">{item.title}</h4>
-                              <p className="text-muted-foreground">{item.value}</p>
-                            </div>
-                          </motion.div>
-                        </a>
-                      </StaggerItem>
-                    ))}
-                  </StaggerContainer>
-                </motion.div>
-              </div>
+                  <Mail className="w-5 h-5" />
+                  info@nyaya-alamban.org
+                </motion.a>
+                
+                <p className="text-sm text-muted-foreground mt-6">
+                  We will respond to your query as soon as possible.
+                </p>
+              </motion.div>
             </motion.div>
           </ScrollReveal>
         </section>
