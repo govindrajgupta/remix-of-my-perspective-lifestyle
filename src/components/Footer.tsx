@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Instagram, Facebook, Linkedin, Mail, Phone, MapPin, ArrowUpRight, Heart } from "lucide-react";
+import { Mail, ArrowUpRight, Heart } from "lucide-react";
 import logo from "@/assets/nyaya-alamban-logo-transparent.png";
 
 const Footer = () => {
@@ -15,12 +15,6 @@ const Footer = () => {
   const legalLinks = [
     { name: "Privacy Policy", path: "/privacy" },
     { name: "Terms of Service", path: "/terms" },
-  ];
-
-  const socialLinks = [
-    { icon: Instagram, href: "#", label: "Instagram" },
-    { icon: Facebook, href: "#", label: "Facebook" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
   ];
 
   return (
@@ -56,20 +50,6 @@ const Footer = () => {
               Empowering communities through legal assistance and promoting 
               alternative dispute resolution for equitable justice.
             </p>
-            
-            {/* Social Links */}
-            <div className="flex items-center gap-2 sm:gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-primary-foreground/10 hover:bg-accent hover:text-accent-foreground transition-all duration-300 flex items-center justify-center hover:scale-110 hover:shadow-lg"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-4 h-4 sm:w-5 sm:h-5" />
-                </a>
-              ))}
-            </div>
           </div>
 
           {/* Links Section */}
@@ -100,31 +80,14 @@ const Footer = () => {
             <ul className="space-y-3 sm:space-y-4">
               <li>
                 <a 
-                  href="mailto:contact@nyayaalamban.org" 
+                  href="mailto:info@nyaya-alamban.org" 
                   className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-primary-foreground/70 hover:text-primary-foreground transition-all duration-300 group"
                 >
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-accent group-hover:scale-110">
                     <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-accent group-hover:text-accent-foreground" />
                   </div>
-                  <span className="break-all">contact@nyayaalamban.org</span>
+                  <span className="break-all">info@nyaya-alamban.org</span>
                 </a>
-              </li>
-              <li>
-                <a 
-                  href="tel:+91XXXXXXXXXX" 
-                  className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-primary-foreground/70 hover:text-primary-foreground transition-all duration-300 group"
-                >
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-accent group-hover:scale-110">
-                    <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-accent group-hover:text-accent-foreground" />
-                  </div>
-                  <span>+91 XXXXX XXXXX</span>
-                </a>
-              </li>
-              <li className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-primary-foreground/70">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-accent" />
-                </div>
-                <span>India</span>
               </li>
             </ul>
           </div>

@@ -1,6 +1,6 @@
 import NavHeader from "@/components/NavHeader";
 import Footer from "@/components/Footer";
-import { Mail, Phone, MapPin, Send } from "lucide-react";
+import { Mail, Send } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,9 +30,7 @@ const Contact = () => {
   };
 
   const contactInfo = [
-    { icon: Mail, title: "Email", value: "contact@nyayaalamban.org" },
-    { icon: Phone, title: "Phone", value: "+91 XXXXX XXXXX" },
-    { icon: MapPin, title: "Address", value: "India" },
+    { icon: Mail, title: "Email", value: "info@nyaya-alamban.org", href: "mailto:info@nyaya-alamban.org" },
   ];
 
   return (
@@ -136,34 +134,30 @@ const Contact = () => {
                   <StaggerContainer staggerDelay={0.1} className="space-y-6">
                     {contactInfo.map((item, index) => (
                       <StaggerItem key={index}>
-                        <motion.div 
-                          className="flex items-start gap-4"
-                          whileHover={{ x: 5 }}
-                          transition={{ type: "spring", stiffness: 300 }}
+                        <a 
+                          href={item.href}
+                          className="block"
                         >
                           <motion.div 
-                            className="w-12 h-12 rounded-full bg-background flex items-center justify-center flex-shrink-0"
-                            whileHover={{ scale: 1.1, rotate: 10 }}
+                            className="flex items-start gap-4"
+                            whileHover={{ x: 5 }}
+                            transition={{ type: "spring", stiffness: 300 }}
                           >
-                            <item.icon className="w-5 h-5" />
+                            <motion.div 
+                              className="w-12 h-12 rounded-full bg-background flex items-center justify-center flex-shrink-0"
+                              whileHover={{ scale: 1.1, rotate: 10 }}
+                            >
+                              <item.icon className="w-5 h-5" />
+                            </motion.div>
+                            <div>
+                              <h4 className="font-semibold">{item.title}</h4>
+                              <p className="text-muted-foreground">{item.value}</p>
+                            </div>
                           </motion.div>
-                          <div>
-                            <h4 className="font-semibold">{item.title}</h4>
-                            <p className="text-muted-foreground">{item.value}</p>
-                          </div>
-                        </motion.div>
+                        </a>
                       </StaggerItem>
                     ))}
                   </StaggerContainer>
-
-                  {/* Map Placeholder */}
-                  <motion.div 
-                    className="mt-8 bg-background rounded-2xl h-48 flex items-center justify-center overflow-hidden"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ type: "spring", stiffness: 200 }}
-                  >
-                    <p className="text-muted-foreground text-sm">Map placeholder</p>
-                  </motion.div>
                 </motion.div>
               </div>
             </motion.div>
