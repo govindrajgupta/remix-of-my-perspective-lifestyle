@@ -46,11 +46,13 @@ const BlogPost = () => {
     }
   };
 
-  const isYouTubeUrl = (url: string) => {
+  const isYouTubeUrl = (url: string | null | undefined): boolean => {
+    if (!url || typeof url !== 'string') return false;
     return url.includes('youtube.com') || url.includes('youtu.be');
   };
 
-  const getYouTubeEmbedUrl = (url: string) => {
+  const getYouTubeEmbedUrl = (url: string | null | undefined): string | null => {
+    if (!url || typeof url !== 'string') return null;
     const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)?.[1];
     return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
   };

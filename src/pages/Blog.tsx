@@ -9,22 +9,27 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 // Helper to check if URL is a YouTube link
-const isYouTubeUrl = (url: string) => {
-  return url?.includes('youtube.com') || url?.includes('youtu.be');
+const isYouTubeUrl = (url: string | null | undefined): boolean => {
+  if (!url || typeof url !== 'string') return false;
+  return url.includes('youtube.com') || url.includes('youtu.be');
 };
 
 // Get YouTube thumbnail from URL
-const getYouTubeThumbnail = (url: string) => {
-  if (!url) return null;
-  let videoId = '';
-  if (url.includes('youtube.com/watch')) {
-    videoId = new URL(url).searchParams.get('v') || '';
-  } else if (url.includes('youtu.be/')) {
-    videoId = url.split('youtu.be/')[1]?.split('?')[0] || '';
-  } else if (url.includes('youtube.com/embed/')) {
-    videoId = url.split('embed/')[1]?.split('?')[0] || '';
+const getYouTubeThumbnail = (url: string | null | undefined): string | null => {
+  if (!url || typeof url !== 'string') return null;
+  try {
+    let videoId = '';
+    if (url.includes('youtube.com/watch')) {
+      videoId = new URL(url).searchParams.get('v') || '';
+    } else if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1]?.split('?')[0] || '';
+    } else if (url.includes('youtube.com/embed/')) {
+      videoId = url.split('embed/')[1]?.split('?')[0] || '';
+    }
+    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
+  } catch {
+    return null;
   }
-  return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
 };
 
 // Media Card Component for proper image/video display

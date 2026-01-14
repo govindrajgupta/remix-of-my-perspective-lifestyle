@@ -18,6 +18,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from "@/components/ui/dialog";
 import {
   AlertDialog,
@@ -524,6 +525,9 @@ const Admin = () => {
             <DialogTitle className="text-2xl">
               {selectedPost ? 'Edit Post' : 'Create New Post'}
             </DialogTitle>
+            <DialogDescription>
+              {selectedPost ? 'Update the blog post details below.' : 'Fill in the details to create a new blog post.'}
+            </DialogDescription>
           </DialogHeader>
           
           <form onSubmit={handleSubmit} className="space-y-6">
