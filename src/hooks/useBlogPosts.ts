@@ -86,6 +86,17 @@ export const createBlogPost = async (post: Omit<BlogPost, 'id' | 'created_at' | 
       (col) => typeof error?.message === 'string' && error.message.includes(`Could not find the '${col}' column`)
     );
 
+    // If the author provided a video URL, silently dropping it would be confusing.
+    if (missingColumn === 'video_url') {
+      const videoValue = payload?.video_url;
+      const hasVideo = typeof videoValue === 'string' ? videoValue.trim().length > 0 : Boolean(videoValue);
+      if (hasVideo) {
+        throw new Error(
+          "Video couldn't be saved because your database table 'blog_posts' is missing the 'video_url' column. Add the column and try again."
+        );
+      }
+    }
+
     if (missingColumn && missingColumn in payload) {
       const nextPayload = { ...payload };
       delete nextPayload[missingColumn];
@@ -116,6 +127,16 @@ export const updateBlogPost = async (id: string, updates: Partial<BlogPost>) => 
     const missingColumn = removableColumns.find(
       (col) => typeof error?.message === 'string' && error.message.includes(`Could not find the '${col}' column`)
     );
+
+    if (missingColumn === 'video_url') {
+      const videoValue = payload?.video_url;
+      const hasVideo = typeof videoValue === 'string' ? videoValue.trim().length > 0 : Boolean(videoValue);
+      if (hasVideo) {
+        throw new Error(
+          "Video couldn't be saved because your database table 'blog_posts' is missing the 'video_url' column. Add the column and try again."
+        );
+      }
+    }
 
     if (missingColumn && missingColumn in payload) {
       const nextPayload = { ...payload };

@@ -26,7 +26,7 @@ const getYouTubeThumbnail = (url: string | null | undefined): string | null => {
     } else if (url.includes('youtube.com/embed/')) {
       videoId = url.split('embed/')[1]?.split('?')[0] || '';
     }
-    return videoId ? `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg` : null;
+    return videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : null;
   } catch {
     return null;
   }
