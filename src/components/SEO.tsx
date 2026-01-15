@@ -32,7 +32,11 @@ const SEO = ({
     : `${SITE_NAME} - In Law We Trust | Legal Aid & Justice for All`;
   
   const fullUrl = url ? `${BASE_URL}${url}` : BASE_URL;
-  const fullImage = image.startsWith('http') ? image : `${BASE_URL}${image}`;
+
+  // `image` can come from DB/content and may be `null` at runtime.
+  // Default values in destructuring only apply to `undefined`, not `null`.
+  const safeImage = typeof image === 'string' && image.trim().length > 0 ? image : DEFAULT_IMAGE;
+  const fullImage = safeImage.startsWith('http') ? safeImage : `${BASE_URL}${safeImage}`;
 
   return (
     <Helmet>
