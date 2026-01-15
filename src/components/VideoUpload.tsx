@@ -25,9 +25,10 @@ const VideoUpload = ({ value, onChange }: VideoUploadProps) => {
       return;
     }
 
-    // Validate file size (max 100MB)
-    if (file.size > 100 * 1024 * 1024) {
-      setError('Video must be less than 100MB');
+    // Validate file size (max 50MB)
+    // Note: the backend bucket currently rejects larger files (413 Payload too large).
+    if (file.size > 50 * 1024 * 1024) {
+      setError('Video must be less than 50MB');
       return;
     }
 
@@ -67,7 +68,10 @@ const VideoUpload = ({ value, onChange }: VideoUploadProps) => {
   };
 
   const getYouTubeEmbedUrl = (url: string) => {
-    const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)?.[1];
+    // Supports: watch?v=, youtu.be/, embed/, shorts/, live/
+    const videoId = url.match(
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/|youtube\.com\/live\/)([^&\s?/]+)/
+    )?.[1];
     return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
   };
 
@@ -129,7 +133,7 @@ const VideoUpload = ({ value, onChange }: VideoUploadProps) => {
                 <Video className="w-6 h-6 text-muted-foreground" />
               </div>
               <p className="text-sm font-medium">Click to upload video</p>
-              <p className="text-xs text-muted-foreground">MP4, WebM, MOV up to 100MB</p>
+              <p className="text-xs text-muted-foreground">MP4, WebM, MOV up to 50MB</p>
             </div>
           )}
         </div>

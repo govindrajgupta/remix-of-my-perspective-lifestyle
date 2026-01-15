@@ -46,9 +46,14 @@ const CommentSection = ({ postId }: CommentSectionProps) => {
       setFormData({ author_name: '', author_email: '', content: '' });
       refetch();
     } catch (error: any) {
+      const msg = error?.message || "Failed to post comment";
+      const isRls = typeof msg === 'string' && msg.toLowerCase().includes('row-level security');
+
       toast({
         title: "Error",
-        description: error.message || "Failed to post comment",
+        description: isRls
+          ? "Comments are blocked by the backend security policy. Enable public comment inserts (I can share the exact SQL) and then try again."
+          : msg,
         variant: "destructive",
       });
     } finally {

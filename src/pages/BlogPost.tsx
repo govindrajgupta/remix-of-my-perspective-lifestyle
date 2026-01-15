@@ -53,8 +53,45 @@ const BlogPost = () => {
 
   const getYouTubeEmbedUrl = (url: string | null | undefined): string | null => {
     if (!url || typeof url !== 'string') return null;
-    const videoId = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/)?.[1];
-    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+
+    try {
+      const normalized = url.startsWith('http') ? url : `https://${url}`;
+      const u = new URL(normalized);
+      const host = u.hostname.replace('www.', '');
+
+      if (!(host.includes('youtube.com') || host === 'youtu.be' || host === 'm.youtube.com')) {
+        return null;
+      }
+
+      // youtu.be/VIDEO_ID
+      if (host === 'youtu.be') {
+        const id = u.pathname.split('/').filter(Boolean)[0];
+        return id ? `https://www.youtube.com/embed/${id}` : null;
+      }
+
+      // youtube.com/watch?v=VIDEO_ID
+      const vParam = u.searchParams.get('v');
+      if (vParam) return `https://www.youtube.com/embed/${vParam}`;
+
+      // youtube.com/embed/VIDEO_ID
+      const embedMatch = u.pathname.match(/\/embed\/([^/?]+)/);
+      if (embedMatch?.[1]) return `https://www.youtube.com/embed/${embedMatch[1]}`;
+
+      // youtube.com/shorts/VIDEO_ID
+      const shortsMatch = u.pathname.match(/\/shorts\/([^/?]+)/);
+      if (shortsMatch?.[1]) return `https://www.youtube.com/embed/${shortsMatch[1]}`;
+
+      // youtube.com/live/VIDEO_ID
+      const liveMatch = u.pathname.match(/\/live\/([^/?]+)/);
+      if (liveMatch?.[1]) return `https://www.youtube.com/embed/${liveMatch[1]}`;
+
+      return null;
+    } catch {
+      const id = url.match(
+        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/shorts\/|youtube\.com\/live\/)([^&\s?/]+)/
+      )?.[1];
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
   };
 
   if (loading) {
