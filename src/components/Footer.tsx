@@ -1,24 +1,29 @@
 import { Link } from "react-router-dom";
 import { Mail, ArrowUpRight, Heart } from "lucide-react";
 import logo from "@/assets/nyaya-alamban-logo-transparent.png";
-
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-
-  const quickLinks = [
-    { name: "Home", path: "/" },
-    { name: "Blog", path: "/blog" },
-    { name: "About Us", path: "/about" },
-    { name: "Contact", path: "/contact" },
-  ];
-
-  const legalLinks = [
-    { name: "Privacy Policy", path: "/privacy" },
-    { name: "Terms of Service", path: "/terms" },
-  ];
-
-  return (
-    <footer className="bg-gradient-to-b from-primary to-primary/95 text-primary-foreground relative overflow-hidden">
+  const quickLinks = [{
+    name: "Home",
+    path: "/"
+  }, {
+    name: "Blog",
+    path: "/blog"
+  }, {
+    name: "About Us",
+    path: "/about"
+  }, {
+    name: "Contact",
+    path: "/contact"
+  }];
+  const legalLinks = [{
+    name: "Privacy Policy",
+    path: "/privacy"
+  }, {
+    name: "Terms of Service",
+    path: "/terms"
+  }];
+  return <footer className="bg-gradient-to-b from-primary to-primary/95 text-primary-foreground relative overflow-hidden">
       {/* Decorative elements */}
       <div className="absolute top-0 left-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-accent/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
       <div className="absolute bottom-0 right-0 w-48 sm:w-64 md:w-96 h-48 sm:h-64 md:h-96 bg-accent/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
@@ -29,13 +34,7 @@ const Footer = () => {
           {/* Brand - Left Side */}
           <div className="sm:col-span-2 lg:col-span-5 space-y-4 sm:space-y-6">
             <Link to="/" className="inline-flex items-center gap-3 sm:gap-5 group">
-              <img 
-                src={logo} 
-                alt="Nyaya Alamban" 
-                loading="lazy"
-                decoding="async"
-                className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto transition-all duration-500 group-hover:scale-105" 
-              />
+              <img src={logo} alt="Nyaya Alamban" loading="lazy" decoding="async" className="h-32 sm:h-16 md:h-20 lg:h-24 w-auto transition-all duration-500 group-hover:scale-105" />
               <div className="border-l-2 border-primary-foreground/20 pl-3 sm:pl-5">
                 <span className="text-lg sm:text-xl lg:text-2xl font-bold font-serif block tracking-tight">
                   Nyaya Alamban
@@ -58,17 +57,12 @@ const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-2 sm:space-y-3">
-              {quickLinks.map((link) => (
-                <li key={link.path}>
-                  <Link 
-                    to={link.path} 
-                    className="group inline-flex items-center gap-2 text-xs sm:text-sm text-primary-foreground/70 hover:text-primary-foreground transition-all duration-300"
-                  >
+              {quickLinks.map(link => <li key={link.path}>
+                  <Link to={link.path} className="group inline-flex items-center gap-2 text-xs sm:text-sm text-primary-foreground/70 hover:text-primary-foreground transition-all duration-300">
                     <span className="link-underline">{link.name}</span>
                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                   </Link>
-                </li>
-              ))}
+                </li>)}
             </ul>
           </div>
 
@@ -79,10 +73,7 @@ const Footer = () => {
             </h4>
             <ul className="space-y-3 sm:space-y-4">
               <li>
-                <a 
-                  href="mailto:info@nyaya-alamban.org" 
-                  className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-primary-foreground/70 hover:text-primary-foreground transition-all duration-300 group"
-                >
+                <a href="mailto:info@nyaya-alamban.org" className="flex items-center gap-3 sm:gap-4 text-xs sm:text-sm text-primary-foreground/70 hover:text-primary-foreground transition-all duration-300 group">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-accent/20 flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:bg-accent group-hover:scale-110">
                     <Mail className="w-4 h-4 sm:w-5 sm:h-5 text-accent group-hover:text-accent-foreground" />
                   </div>
@@ -102,21 +93,13 @@ const Footer = () => {
               © {currentYear} Nyaya Alamban. Made with <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-accent animate-pulse-soft" /> for Justice
             </p>
             <div className="flex items-center gap-4 sm:gap-6">
-              {legalLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className="text-xs sm:text-sm text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-300 link-underline"
-                >
+              {legalLinks.map(link => <Link key={link.path} to={link.path} className="text-xs sm:text-sm text-primary-foreground/50 hover:text-primary-foreground transition-colors duration-300 link-underline">
                   {link.name}
-                </Link>
-              ))}
+                </Link>)}
             </div>
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
